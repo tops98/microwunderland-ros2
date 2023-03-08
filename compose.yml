@@ -1,0 +1,12 @@
+services:
+  ros_env:
+    build: .
+    image: ros2/arm_env:humble
+    container_name: ros_env
+    network_mode: host
+    privileged: true
+    devices:
+      - /dev/gpiomem
+    volumes:
+      - ./mounted:/ros2_workspace
+    command: tail -F anything
