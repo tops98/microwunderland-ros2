@@ -3,12 +3,11 @@
 
 AbstractPwmController::AbstractPwmController(uint64_t oscilatorFrequency, uint32_t pwmFrequency, uint32_t resolution){
     oscilatorFrequency_ = oscilatorFrequency;
-    setPwmFrequency(pwmFrequency,resolution);
+    setPwmFrequency(pwmFrequency);
 }
 
-void AbstractPwmController::setPwmFrequency(uint32_t frequency, uint32_t resolution){
-    resolution_ = resolution;
-    prescaler_ = GET_DIVIDER_FOR_FREQ(oscilatorFrequency_,frequency,resolution);
+void AbstractPwmController::setPwmFrequency(uint32_t frequency){
+    prescaler_ = GET_DIVIDER_FOR_FREQ(oscilatorFrequency_,frequency,resolution_);
     recalculateUnitsPerMicrosecond();
 }
 

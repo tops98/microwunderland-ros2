@@ -39,13 +39,17 @@ class AbstractPwmController{
          * @param frequency Target base frequeny.
          * @param resolution Target resolution if not set 4096 will be used as default.
          */
-        virtual void setPwmFrequency(uint32_t frequency, uint32_t resolution=DEFAULT_RESOLUTION);
+        virtual void setPwmFrequency(uint32_t frequency);
 
         /**
          * Returns the base frequency of the pwm controller.
          */
         _Float64 getFrequency();
 
+
+        /**
+         * Returns the bresolution of the pwm controller.
+         */
         uint32_t getResolution();
         
         /**
@@ -57,24 +61,12 @@ class AbstractPwmController{
          */
         virtual void setPulseWidth( uint8_t pin, uint32_t pulseWidth)=0;
 
-        /**
-         * Sets the selected pin to pwm mode.
-         * @param pin selected gpio pin
-        */
-        virtual void setPinToPwmMode(uint8_t pin)=0;
-
     protected:
         /**
          * Sets the value of the prescaler register
          * @param prescalerVal value of the prescaler register
         */
         virtual void setPrescaler(uint32_t prescalerVal)=0;
-
-        /**
-         * Sets the value of the the range register
-         * @param resolution resolution/range
-        */
-        virtual void setResolution(uint32_t resolution)=0;
 
         /**
          * Converts a desired Pulse width in microseconds

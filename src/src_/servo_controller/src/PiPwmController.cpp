@@ -11,8 +11,8 @@ AbstractPwmController(oscilatorFrequency,pwmFrequency,resolution){
     }
 }
 
-void PiPwmController::setPwmFrequency(uint32_t frequency, uint32_t resolution){
-    AbstractPwmController::setPwmFrequency(frequency,resolution);
+void PiPwmController::setPwmFrequency(uint32_t frequency){
+    AbstractPwmController::setPwmFrequency(frequency);
     setPrescaler(prescaler_);
     setResolution(resolution_);
 }

@@ -34,7 +34,7 @@ class PiPwmController: public AbstractPwmController{
          * @param frequency Target base frequeny.
          * @param resolution Target resolution if not set 4096 will be used as default.
          */
-        void setPwmFrequency(uint32_t frequency, uint32_t resolution=DEFAULT_RESOLUTION) override;
+        void setPwmFrequency(uint32_t frequency) override;
 
         /**
          * Sets the pwm mode for the pi's pwm controller.
@@ -48,7 +48,7 @@ class PiPwmController: public AbstractPwmController{
 
         /**
          * Sets the selected pin to pwm mode.
-         * @param pin selected gpio pin
+         * @param pin selected gpio pin (numbering according to wiringPi)
         */
         void setPinToPwmMode(uint8_t pin) override;
  
@@ -57,7 +57,7 @@ class PiPwmController: public AbstractPwmController{
          * Note: The pulse width shoud not be longer than
          * the period of the base frequency.
          * @param pulseWidth Pulse width in microseconds.
-         * @param pin Selected PWM pin.
+         * @param pin Selected PWM pin (numbering according to wiringPi).
          */
         void setPulseWidth( uint8_t pin, uint32_t pulseWidth) override;
 
@@ -72,6 +72,6 @@ class PiPwmController: public AbstractPwmController{
          * Sets the value of the the range register
          * @param resolution resolution/range
         */
-        void setResolution(uint32_t resolution) override;
+        void setResolution(uint32_t resolution);
 };
 #endif
