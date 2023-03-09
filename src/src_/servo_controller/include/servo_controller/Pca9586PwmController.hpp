@@ -1,25 +1,36 @@
 #ifndef PCA9586PWMCONTROLLER_HPP
 #define PCA9586PWMCONTROLLER_HPP
 
+// std
+#include <unordered_map>
 // package
-#include "AbstractPwmController.hpp"
+#include "servo_controller/AbstractPwmController.hpp"
 // external package
 #include <wiringPiI2C.h>
 
 #define PCA_OSCILATOR_FREQ 25000000
+#define PCA_PWM_RESOLUTION 4096
+#define STARTUP_DELAY 500
+#define SLEEP_MODE_ENABLE_BIT_POS 0x4
+#define PWM_FULL_OFF_POS 0x4
+#define PWM_HIGH_REG_COUNT_MASK 0xf0
+#define DEFAULT_DUTY_CYLCLE_OFFSET 408 // 10% offset
 
 using namespace std;
 
 
 class Pca9586PwmController: public AbstractPwmController{
 
+    // member variables
+    private:
+        int deviceFileHandle_;
+
     // methods:
     public:
         Pca9586PwmController(
             uint8_t deviceId,
             uint64_t oscilatorFrequency=PCA_OSCILATOR_FREQ,
-            uint32_t pwmFrequency=DEFAULT_PWM_FREQU,
-            uint32_t resolution=DEFAULT_RESOLUTION);
+            uint32_t pwmFrequency=DEFAULT_PWM_FREQU);
         
         /**
          * Set base frequency of the pwm signal.
@@ -29,22 +40,47 @@ class Pca9586PwmController: public AbstractPwmController{
          * @param frequency Target base frequeny.
          * @param resolution Target resolution if not set 4096 will be used as default.
          */
-        void setPwmFrequency(uint32_t frequency, uint32_t resolution=DEFAULT_RESOLUTION) override;
+        void setPwmFrequency(uint32_t frequency) override;
 
         /**
-         * Sets the selected pin to pwm mode.
-         * @param pin selected gpio pin
+         * Turns an pwm output channel on or off.
+         * @param pin pin nummber according to PCA9685 pinout
+         * @param toggle True to turn output on, false to turn it off
         */
-        void setPinToPwmMode(uint8_t pin) override;
+        void setPinMode(uint8_t pin, bool toggle);
  
         /**
          * Set target pulse width on the selected pwm output.
-         * Note: The pulse width shoud not be longer than
+         * NOTE: The pulse width shoud not be longer than
          * the period of the base frequency.
-         * @param pulseWidth Pulse width in microseconds.
          * @param pin Selected PWM pin.
+         * @param pulseWidth Pulse width in microseconds.
          */
         void setPulseWidth( uint8_t pin, uint32_t pulseWidth) override;
+
+        /**
+         * Set target pulse width on the selected pwm output, and
+         * offset the start and end of the duty cylce.
+         * NOTE: The pulse width shoud not be longer than
+         * the period of the base frequency.
+         * @param pin Selected PWM pin.
+         * @param pulseWidth Pulse width in microseconds.
+         * @param offset offset in microseconds
+         */
+        void setPulseWidth( uint8_t pin, uint32_t pulseWidth, uint16_t offset);
+
+        /**
+         * Set the start and stop time of a pwm duty cycle
+         * for a selected pwm channel.
+         * NOTE: Start and stop time cant be greater or equal
+         * to the period length. E.g: for pwm signal with a frequency
+         * of 50hz the period is 1000ms/50hz = 20ms meaning that start and
+         * stop time have to be smaller than 20ms
+         * @param pin Selected PWM pin.
+         * @param startTime Start of duty cycle in microseconds.
+         * @param stopTime End of duty cycle in microseconds.
+         */
+        void setPulseWidth( uint8_t pin, uint16_t startTime, uint16_t stopTime);
 
     private:
         /**
@@ -54,10 +90,31 @@ class Pca9586PwmController: public AbstractPwmController{
         void setPrescaler(uint32_t prescalerVal) override;
 
         /**
-         * Sets the value of the the range register
-         * @param resolution resolution/range
+         * Enables or dissables the sleep mode of the pca9685.
+         * NOTE: On startup sleep mode is always enabled.
+         * NOTE: The pca9685 needs 500us to leave sleep mode.
+         * Calls durring the startup will result in undefined behavior
+         * @param enable True sleep mode will be enabled; 
+         * False sleep mode will be dissabled 
         */
-        void setResolution(uint32_t resolution) override;
+        void setSleepMode(bool enable);
+
+        /**
+         * Sets a signle bit in an 8 bit register, while leaving
+         * all other bits unchanged
+         * @param address address of the reigster
+         * @param positon position of the bit
+         * @param value value of the bit (true=1, false=0)
+        */
+        void setSingleBitReg8(uint8_t address, uint8_t position, bool value);
+
+        /**
+         * Sets a signle bit in an 8 bit register, while leaving
+         * all other bits unchanged
+         * @param address address of the reigster
+         * @param value value of the register
+        */
+        void setReg8(uint8_t address, uint8_t value, uint8_t mask=0xff);
         
 };
 #endif
