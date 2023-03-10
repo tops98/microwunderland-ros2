@@ -17,7 +17,7 @@ uint32_t frequnecy){
     servoPin_ = servoPin;
     pwmController_ = pwmController;
 
-    pwmController_->setPinToPwmMode(servoPin);
+    pwmController_->enablePwmPin(servoPin);
     pwmController_->setPwmFrequency(frequency_);
     recalculatePulseLengthPerDegreeConst();
 }
@@ -30,4 +30,8 @@ void Servomotor::recalculatePulseLengthPerDegreeConst(){
 void Servomotor::setAngle(uint16_t angle){
     uint32_t pulse = pulseLengthPerDegree_* angle + minPulse_;
     pwmController_->setPulseWidth(servoPin_, pulse);
+}
+
+uint16_t Servomotor::getActuationRange(){
+    return actuationRange_;
 }

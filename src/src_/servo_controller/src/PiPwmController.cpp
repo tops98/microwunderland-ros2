@@ -29,11 +29,15 @@ void PiPwmController::setResolution(uint32_t resolution){
     pwmSetRange(resolution-1);
 }
 
-void PiPwmController::setPinToPwmMode(uint8_t pin){
-    pinMode(pin,PWM_OUTPUT);
-    setPwmMode(EpwmMode::strict);
-    setPrescaler(prescaler_);
-    setResolution(resolution_);
+void PiPwmController::enablePwmPin(uint8_t pin, bool pwmOn){
+    if(pwmOn){
+        pinMode(pin,PWM_OUTPUT);
+        setPwmMode(EpwmMode::strict);
+        setPrescaler(prescaler_);
+        setResolution(resolution_);
+    }else{
+        pinMode(pin,INPUT);
+    }
 }
 
 void PiPwmController::setPulseWidth(uint8_t pin, uint32_t pulseWidth){

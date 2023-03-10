@@ -1,9 +1,12 @@
 #ifndef SERVOMOTOR_HPP
 #define SERVOMOTOR_HPP
 
+// package
 #include <servo_controller/AbstractPwmController.hpp>
+// std
 #include <memory>
 #include <stdexcept>
+
 
 class Servomotor{
     //member varibales:
@@ -39,7 +42,17 @@ class Servomotor{
         */
         void setAngle(uint16_t angle);
 
+        /**
+         * Get actuation range of the servomotor
+         * @return range in degree
+        */
+        uint16_t getActuationRange();
+
     private:
+        /**
+         * Recalculates the factor used for converting angle degrees
+         * to a pulse length in microseconds
+        */
         void recalculatePulseLengthPerDegreeConst(); 
 };
 #endif

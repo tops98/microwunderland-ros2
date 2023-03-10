@@ -51,6 +51,13 @@ class AbstractPwmController{
          * Returns the bresolution of the pwm controller.
          */
         uint32_t getResolution();
+
+        /**
+         * Enables or disables pwm on a given pin.
+         * @param pin selected gpio pin
+         * @param pwmOn true= pwm on; false= pwm off
+        */
+        virtual void enablePwmPin(uint8_t pin, bool pwmOn)=0;
         
         /**
          * Set target pulse width on the selected pwm output.

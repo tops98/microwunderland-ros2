@@ -47,10 +47,11 @@ class PiPwmController: public AbstractPwmController{
         void setPwmMode(EpwmMode pwmMode);
 
         /**
-         * Sets the selected pin to pwm mode.
-         * @param pin selected gpio pin (numbering according to wiringPi)
+         * Enables or disables pwm on a given pin.
+         * @param pin selected gpio pin
+         * @param pwmOn true= pwm on; false= pwm off
         */
-        void setPinToPwmMode(uint8_t pin) override;
+        void enablePwmPin(uint8_t pin, bool pwmOn)override;
  
         /**
          * Set target pulse width on the selected pwm output.

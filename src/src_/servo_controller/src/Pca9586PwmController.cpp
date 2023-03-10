@@ -1,6 +1,10 @@
 #include "servo_controller/Pca9586PwmController.hpp"
+
+// package
 #include "servo_controller/PCA9586_Registers.h"
+// external
 #include <wiringPi.h>
+// std
 #include <stdexcept>
 
 
@@ -30,8 +34,8 @@ void Pca9586PwmController::setPrescaler(uint32_t prescalerVal){
     delayMicroseconds(STARTUP_DELAY);
 }
 
-void Pca9586PwmController::setPinMode(uint8_t pin, bool toggle){
-    setSingleBitReg8(PIN_TO_REGISTER[pin].off.high,PWM_FULL_OFF_POS,toggle);
+void Pca9586PwmController::enablePwmPin(uint8_t pin, bool pwmOn){
+    setSingleBitReg8(PIN_TO_REGISTER[pin].off.high,PWM_FULL_OFF_POS,pwmOn);
 }
 
 void Pca9586PwmController::setPulseWidth(uint8_t pin, uint32_t pulseWidth){

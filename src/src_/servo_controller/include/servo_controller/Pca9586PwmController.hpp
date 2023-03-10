@@ -13,7 +13,8 @@
 #define STARTUP_DELAY 500
 #define SLEEP_MODE_ENABLE_BIT_POS 0x4
 #define PWM_FULL_OFF_POS 0x4
-#define PWM_HIGH_REG_COUNT_MASK 0xf0
+#define PWM_ON_HIGH_REG_COUNT_MASK 0xf0
+#define PWM_OFF_HIGH_REG_MASK 0xe0
 #define DEFAULT_DUTY_CYLCLE_OFFSET 408 // 10% offset
 
 using namespace std;
@@ -43,18 +44,19 @@ class Pca9586PwmController: public AbstractPwmController{
         void setPwmFrequency(uint32_t frequency) override;
 
         /**
-         * Turns an pwm output channel on or off.
-         * @param pin pin nummber according to PCA9685 pinout
-         * @param toggle True to turn output on, false to turn it off
+         * Enables or disables pwm on a given pin.
+         * @param pin selected gpio pin
+         * @param pwmOn true= pwm on; false= pwm off
         */
-        void setPinMode(uint8_t pin, bool toggle);
- 
+        void enablePwmPin(uint8_t pin, bool pwmOn) override;
+        
         /**
          * Set target pulse width on the selected pwm output.
          * NOTE: The pulse width shoud not be longer than
          * the period of the base frequency.
          * @param pin Selected PWM pin.
          * @param pulseWidth Pulse width in microseconds.
+         * @throw invalid_argument if pulse width is longer than period
          */
         void setPulseWidth( uint8_t pin, uint32_t pulseWidth) override;
 
@@ -66,6 +68,7 @@ class Pca9586PwmController: public AbstractPwmController{
          * @param pin Selected PWM pin.
          * @param pulseWidth Pulse width in microseconds.
          * @param offset offset in microseconds
+         * @throw invalid_argument if pulse width is longer than period
          */
         void setPulseWidth( uint8_t pin, uint32_t pulseWidth, uint16_t offset);
 
@@ -79,6 +82,8 @@ class Pca9586PwmController: public AbstractPwmController{
          * @param pin Selected PWM pin.
          * @param startTime Start of duty cycle in microseconds.
          * @param stopTime End of duty cycle in microseconds.
+         * @throw invalid_argument if start or stop time is greater than 
+         * period lentgh
          */
         void setPulseWidth( uint8_t pin, uint16_t startTime, uint16_t stopTime);
 
