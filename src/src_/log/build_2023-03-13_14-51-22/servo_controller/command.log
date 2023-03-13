@@ -1,0 +1,4 @@
+Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /ros2_workspace/src_/servo_controller -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ros2_workspace/src_/install/servo_controller
+Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /ros2_workspace/src_/servo_controller -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ros2_workspace/src_/install/servo_controller
+Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12

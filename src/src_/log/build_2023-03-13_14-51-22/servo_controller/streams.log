@@ -1,0 +1,65 @@
+[0.191s] Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /ros2_workspace/src_/servo_controller -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ros2_workspace/src_/install/servo_controller
+[1.513s] -- The C compiler identification is GNU 11.3.0
+[2.537s] -- The CXX compiler identification is GNU 11.3.0
+[2.614s] -- Detecting C compiler ABI info
+[3.891s] -- Detecting C compiler ABI info - done
+[3.990s] -- Check for working C compiler: /usr/bin/cc - skipped
+[3.992s] -- Detecting C compile features
+[3.995s] -- Detecting C compile features - done
+[4.014s] -- Detecting CXX compiler ABI info
+[5.256s] -- Detecting CXX compiler ABI info - done
+[5.333s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[5.335s] -- Detecting CXX compile features
+[5.342s] -- Detecting CXX compile features - done
+[5.371s] -- Found ament_cmake: 1.3.3 (/opt/ros/humble/share/ament_cmake/cmake)
+[7.624s] -- Found Python3: /usr/bin/python3.10 (found version "3.10.6") found components: Interpreter 
+[8.244s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[8.365s] -- Found ament_lint_auto: 0.12.5 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[9.078s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[9.081s] -- Configured cppcheck include dirs: /ros2_workspace/src_/servo_controller/include
+[9.082s] -- Configured cppcheck exclude dirs and/or files: 
+[9.091s] -- Added test 'lint_cmake' to check CMake code style
+[9.099s] -- Added test 'uncrustify' to check C / C++ code style
+[9.100s] -- Configured uncrustify additional arguments: 
+[9.102s] -- Added test 'xmllint' to check XML markup files
+[9.112s] -- Configuring done
+[9.159s] -- Generating done
+[9.165s] -- Build files have been written to: /ros2_workspace/src_/build/servo_controller
+[9.203s] Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /ros2_workspace/src_/servo_controller -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ros2_workspace/src_/install/servo_controller
+[9.213s] Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+[10.060s] [ 28%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/Servomotor.cpp.o[0m
+[10.062s] [ 28%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/Switch.cpp.o[0m
+[10.063s] [ 42%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/Pca9586PwmController.cpp.o[0m
+[10.066s] [ 57%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/servoTest.cpp.o[0m
+[10.077s] [ 71%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/PiPwmController.cpp.o[0m
+[10.085s] [ 85%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/AbstractPwmController.cpp.o[0m
+[12.509s] [01m[K/ros2_workspace/src_/servo_controller/src/AbstractPwmController.cpp:[m[K In constructor ‘[01m[KAbstractPwmController::AbstractPwmController(uint64_t, uint32_t, uint32_t)[m[K’:
+[12.512s] [01m[K/ros2_workspace/src_/servo_controller/src/AbstractPwmController.cpp:4:107:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kresolution[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[12.514s]     4 | AbstractPwmController::AbstractPwmController(uint64_t oscilatorFrequency, uint32_t pwmFrequency, [01;35m[Kuint32_t resolution[m[K){
+[12.516s]       |                                                                                                  [01;35m[K~~~~~~~~~^~~~~~~~~~[m[K
+[14.488s] [01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:[m[K In constructor ‘[01m[KServomotor::Servomotor(std::shared_ptr<AbstractPwmController>, uint8_t, uint32_t, uint32_t, uint16_t, uint32_t)[m[K’:
+[14.489s] [01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:20:33:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[KAbstractPwmController::enablePwmPin(uint8_t&)[m[K’
+[14.490s]    20 |     [01;31m[KpwmController_->enablePwmPin(servoPin)[m[K;
+[14.491s]       |     [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~[m[K
+[14.492s] In file included from [01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/Servomotor.hpp:5[m[K,
+[14.493s]                  from [01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:1[m[K:
+[14.495s] [01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kvirtual void AbstractPwmController::enablePwmPin(uint8_t, bool)[m[K’
+[14.496s]    60 |         virtual void [01;36m[KenablePwmPin[m[K(uint8_t pin, bool pwmOn)=0;
+[14.497s]       |                      [01;36m[K^~~~~~~~~~~~[m[K
+[14.498s] [01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+[15.372s] gmake[2]: *** [CMakeFiles/servoTest.dir/build.make:118: CMakeFiles/servoTest.dir/src/Servomotor.cpp.o] Error 1
+[15.373s] gmake[2]: *** Waiting for unfinished jobs....
+[15.411s] [01m[K/ros2_workspace/src_/servo_controller/src/servoTest.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[15.412s] [01m[K/ros2_workspace/src_/servo_controller/src/servoTest.cpp:8:14:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargc[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[15.413s]     8 | int main([01;35m[Kint argc[m[K, char* argv[]){
+[15.413s]       |          [01;35m[K~~~~^~~~[m[K
+[15.414s] [01m[K/ros2_workspace/src_/servo_controller/src/servoTest.cpp:8:26:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargv[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[15.414s]     8 | int main(int argc, [01;35m[Kchar* argv[][m[K){
+[15.415s]       |                    [01;35m[K~~~~~~^~~~~~[m[K
+[15.548s] [01m[K/ros2_workspace/src_/servo_controller/src/Switch.cpp:[m[K In constructor ‘[01m[KSwitch::Switch(std::shared_ptr<Servomotor>, std::unordered_map<std::__cxx11::basic_string<char>, short unsigned int>, std::string)[m[K’:
+[15.549s] [01m[K/ros2_workspace/src_/servo_controller/src/Switch.cpp:11:8:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KinitialState[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[15.550s]    11 | [01;35m[Kstring initialState[m[K){
+[15.550s]       | [01;35m[K~~~~~~~^~~~~~~~~~~~[m[K
+[17.583s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/servoTest.dir/all] Error 2
+[17.589s] gmake: *** [Makefile:146: all] Error 2
+[17.617s] Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12

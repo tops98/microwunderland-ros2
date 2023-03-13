@@ -1,0 +1,22 @@
+[35m[1mConsolidate compiler generated dependencies of target servoTest[0m
+[ 14%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/Servomotor.cpp.o[0m
+[ 28%] [32m[1mLinking CXX executable servoTest[0m
+[100%] Built target servoTest
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/lib/servo_controller/servoTest
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/package_run_dependencies/servo_controller
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/parent_prefix_path/servo_controller
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/ament_prefix_path.sh
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/ament_prefix_path.dsv
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/path.sh
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/path.dsv
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.bash
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.sh
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.zsh
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.dsv
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/package.dsv
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/packages/servo_controller
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/cmake/servo_controllerConfig.cmake
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/cmake/servo_controllerConfig-version.cmake
+-- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/package.xml

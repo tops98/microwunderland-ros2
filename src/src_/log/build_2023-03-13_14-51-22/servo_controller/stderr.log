@@ -1,0 +1,29 @@
+[01m[K/ros2_workspace/src_/servo_controller/src/AbstractPwmController.cpp:[m[K In constructor ‘[01m[KAbstractPwmController::AbstractPwmController(uint64_t, uint32_t, uint32_t)[m[K’:
+[01m[K/ros2_workspace/src_/servo_controller/src/AbstractPwmController.cpp:4:107:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kresolution[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+    4 | AbstractPwmController::AbstractPwmController(uint64_t oscilatorFrequency, uint32_t pwmFrequency, [01;35m[Kuint32_t resolution[m[K){
+      |                                                                                                  [01;35m[K~~~~~~~~~^~~~~~~~~~[m[K
+[01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:[m[K In constructor ‘[01m[KServomotor::Servomotor(std::shared_ptr<AbstractPwmController>, uint8_t, uint32_t, uint32_t, uint16_t, uint32_t)[m[K’:
+[01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:20:33:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[KAbstractPwmController::enablePwmPin(uint8_t&)[m[K’
+   20 |     [01;31m[KpwmController_->enablePwmPin(servoPin)[m[K;
+      |     [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~[m[K
+In file included from [01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/Servomotor.hpp:5[m[K,
+                 from [01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:1[m[K:
+[01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kvirtual void AbstractPwmController::enablePwmPin(uint8_t, bool)[m[K’
+   60 |         virtual void [01;36m[KenablePwmPin[m[K(uint8_t pin, bool pwmOn)=0;
+      |                      [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+gmake[2]: *** [CMakeFiles/servoTest.dir/build.make:118: CMakeFiles/servoTest.dir/src/Servomotor.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+[01m[K/ros2_workspace/src_/servo_controller/src/servoTest.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[01m[K/ros2_workspace/src_/servo_controller/src/servoTest.cpp:8:14:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargc[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+    8 | int main([01;35m[Kint argc[m[K, char* argv[]){
+      |          [01;35m[K~~~~^~~~[m[K
+[01m[K/ros2_workspace/src_/servo_controller/src/servoTest.cpp:8:26:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargv[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+    8 | int main(int argc, [01;35m[Kchar* argv[][m[K){
+      |                    [01;35m[K~~~~~~^~~~~~[m[K
+[01m[K/ros2_workspace/src_/servo_controller/src/Switch.cpp:[m[K In constructor ‘[01m[KSwitch::Switch(std::shared_ptr<Servomotor>, std::unordered_map<std::__cxx11::basic_string<char>, short unsigned int>, std::string)[m[K’:
+[01m[K/ros2_workspace/src_/servo_controller/src/Switch.cpp:11:8:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KinitialState[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+   11 | [01;35m[Kstring initialState[m[K){
+      | [01;35m[K~~~~~~~^~~~~~~~~~~~[m[K
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/servoTest.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

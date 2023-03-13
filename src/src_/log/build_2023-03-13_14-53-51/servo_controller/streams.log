@@ -1,0 +1,26 @@
+[0.169s] Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+[1.011s] [35m[1mConsolidate compiler generated dependencies of target servoTest[0m
+[1.285s] [ 14%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/Servomotor.cpp.o[0m
+[5.776s] [ 28%] [32m[1mLinking CXX executable servoTest[0m
+[6.558s] [100%] Built target servoTest
+[6.715s] Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+[7.996s] Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ros2_workspace/src_/build/servo_controller
+[8.154s] -- Install configuration: ""
+[8.161s] -- Execute custom install script
+[8.170s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/lib/servo_controller/servoTest
+[8.282s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/package_run_dependencies/servo_controller
+[8.389s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/parent_prefix_path/servo_controller
+[8.493s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/ament_prefix_path.sh
+[8.597s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/ament_prefix_path.dsv
+[8.707s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/path.sh
+[8.826s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/path.dsv
+[8.935s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.bash
+[9.045s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.sh
+[9.150s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.zsh
+[9.268s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.dsv
+[9.373s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/package.dsv
+[9.479s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/packages/servo_controller
+[9.593s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/cmake/servo_controllerConfig.cmake
+[9.697s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/cmake/servo_controllerConfig-version.cmake
+[9.807s] -- Symlinking: /ros2_workspace/src_/install/servo_controller/share/servo_controller/package.xml
+[9.944s] Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ros2_workspace/src_/build/servo_controller

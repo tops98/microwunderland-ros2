@@ -1,0 +1,4 @@
+Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ros2_workspace/src_/build/servo_controller
+Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ros2_workspace/src_/build/servo_controller

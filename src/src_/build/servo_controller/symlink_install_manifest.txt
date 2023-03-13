@@ -1,0 +1,16 @@
+/ros2_workspace/src_/install/servo_controller/lib/servo_controller/servoTest
+/ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/package_run_dependencies/servo_controller
+/ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/parent_prefix_path/servo_controller
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/ament_prefix_path.sh
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/ament_prefix_path.dsv
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/path.sh
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/environment/path.dsv
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.bash
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.sh
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.zsh
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/local_setup.dsv
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.dsv
+/ros2_workspace/src_/install/servo_controller/share/ament_index/resource_index/packages/servo_controller
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/cmake/servo_controllerConfig.cmake
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/cmake/servo_controllerConfig-version.cmake
+/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.xml

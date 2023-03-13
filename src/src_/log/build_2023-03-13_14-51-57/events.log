@@ -1,0 +1,85 @@
+[0.000000] (-) TimerEvent: {}
+[0.004950] (servo_controller) JobQueued: {'identifier': 'servo_controller', 'dependencies': OrderedDict()}
+[0.008942] (servo_controller) JobStarted: {'identifier': 'servo_controller'}
+[0.097543] (-) TimerEvent: {}
+[0.150239] (servo_controller) JobProgress: {'identifier': 'servo_controller', 'progress': 'cmake'}
+[0.154155] (servo_controller) JobProgress: {'identifier': 'servo_controller', 'progress': 'build'}
+[0.158431] (servo_controller) Command: {'cmd': ['/usr/bin/cmake', '--build', '/ros2_workspace/src_/build/servo_controller', '--', '-j12', '-l12'], 'cwd': '/ros2_workspace/src_/build/servo_controller', 'env': OrderedDict([('COLCON', '1'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_ALL', 'C.UTF-8'), ('PWD', '/ros2_workspace/src_/build/servo_controller'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('LANG', 'C.UTF-8'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('ROS_LOCALHOST_ONLY', '0'), ('TERM', 'xterm'), ('ROS_VERSION', '2'), ('_', '/usr/bin/colcon'), ('ROS_DISTRO', 'humble'), ('ROS_PYTHON_VERSION', '3'), ('OLDPWD', '/ros2_workspace/src_/servo_controller'), ('HOME', '/root'), ('LD_LIBRARY_PATH', '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('SHLVL', '1'), ('HOSTNAME', 'tobias-XPS-15-9500'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.197842] (-) TimerEvent: {}
+[0.299032] (-) TimerEvent: {}
+[0.400160] (-) TimerEvent: {}
+[0.501182] (-) TimerEvent: {}
+[0.602134] (-) TimerEvent: {}
+[0.703128] (-) TimerEvent: {}
+[0.804072] (-) TimerEvent: {}
+[0.805019] (servo_controller) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target servoTest\x1b[0m\n'}
+[0.904382] (-) TimerEvent: {}
+[1.005330] (-) TimerEvent: {}
+[1.006691] (servo_controller) StdoutLine: {'line': b'[ 14%] \x1b[32mBuilding CXX object CMakeFiles/servoTest.dir/src/Servomotor.cpp.o\x1b[0m\n'}
+[1.105708] (-) TimerEvent: {}
+[1.207686] (-) TimerEvent: {}
+[1.309337] (-) TimerEvent: {}
+[1.411193] (-) TimerEvent: {}
+[1.512691] (-) TimerEvent: {}
+[1.614250] (-) TimerEvent: {}
+[1.715705] (-) TimerEvent: {}
+[1.817427] (-) TimerEvent: {}
+[1.919381] (-) TimerEvent: {}
+[2.020855] (-) TimerEvent: {}
+[2.122228] (-) TimerEvent: {}
+[2.223370] (-) TimerEvent: {}
+[2.324421] (-) TimerEvent: {}
+[2.425407] (-) TimerEvent: {}
+[2.526423] (-) TimerEvent: {}
+[2.627545] (-) TimerEvent: {}
+[2.728850] (-) TimerEvent: {}
+[2.830015] (-) TimerEvent: {}
+[2.931373] (-) TimerEvent: {}
+[3.032980] (-) TimerEvent: {}
+[3.134802] (-) TimerEvent: {}
+[3.237460] (-) TimerEvent: {}
+[3.338571] (-) TimerEvent: {}
+[3.439905] (-) TimerEvent: {}
+[3.542688] (-) TimerEvent: {}
+[3.644732] (-) TimerEvent: {}
+[3.746100] (-) TimerEvent: {}
+[3.847183] (-) TimerEvent: {}
+[3.948151] (-) TimerEvent: {}
+[4.049309] (-) TimerEvent: {}
+[4.151199] (-) TimerEvent: {}
+[4.252743] (-) TimerEvent: {}
+[4.353735] (-) TimerEvent: {}
+[4.454714] (-) TimerEvent: {}
+[4.464769] (servo_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KServomotor::Servomotor(std::shared_ptr<AbstractPwmController>, uint8_t, uint32_t, uint32_t, uint16_t, uint32_t)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[4.466021] (servo_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:20:33:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kno matching function for call to \xe2\x80\x98\x1b[01m\x1b[KAbstractPwmController::enablePwmPin(uint8_t&)\x1b[m\x1b[K\xe2\x80\x99\n'}
+[4.467497] (servo_controller) StderrLine: {'line': b'   20 |     \x1b[01;31m\x1b[KpwmController_->enablePwmPin(servoPin)\x1b[m\x1b[K;\n'}
+[4.468385] (servo_controller) StderrLine: {'line': b'      |     \x1b[01;31m\x1b[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~\x1b[m\x1b[K\n'}
+[4.469294] (servo_controller) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/ros2_workspace/src_/servo_controller/include/servo_controller/Servomotor.hpp:5\x1b[m\x1b[K,\n'}
+[4.470132] (servo_controller) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:1\x1b[m\x1b[K:\n'}
+[4.470976] (servo_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kcandidate: \xe2\x80\x98\x1b[01m\x1b[Kvirtual void AbstractPwmController::enablePwmPin(uint8_t, bool)\x1b[m\x1b[K\xe2\x80\x99\n'}
+[4.471873] (servo_controller) StderrLine: {'line': b'   60 |         virtual void \x1b[01;36m\x1b[KenablePwmPin\x1b[m\x1b[K(uint8_t pin, bool pwmOn)=0;\n'}
+[4.475538] (servo_controller) StderrLine: {'line': b'      |                      \x1b[01;36m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[4.476474] (servo_controller) StderrLine: {'line': b'\x1b[01m\x1b[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K  candidate expects 2 arguments, 1 provided\n'}
+[4.554950] (-) TimerEvent: {}
+[4.655934] (-) TimerEvent: {}
+[4.756956] (-) TimerEvent: {}
+[4.857912] (-) TimerEvent: {}
+[4.958900] (-) TimerEvent: {}
+[5.059856] (-) TimerEvent: {}
+[5.120702] (servo_controller) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/servoTest.dir/build.make:118: CMakeFiles/servoTest.dir/src/Servomotor.cpp.o] Error 1\n'}
+[5.124725] (servo_controller) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/servoTest.dir/all] Error 2\n'}
+[5.130608] (servo_controller) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[5.147196] (servo_controller) CommandEnded: {'returncode': 2}
+[5.160102] (-) TimerEvent: {}
+[5.261367] (-) TimerEvent: {}
+[5.362322] (-) TimerEvent: {}
+[5.463302] (-) TimerEvent: {}
+[5.564250] (-) TimerEvent: {}
+[5.665559] (-) TimerEvent: {}
+[5.766515] (-) TimerEvent: {}
+[5.867622] (-) TimerEvent: {}
+[5.968952] (-) TimerEvent: {}
+[6.070455] (-) TimerEvent: {}
+[6.175415] (-) TimerEvent: {}
+[6.250117] (servo_controller) JobEnded: {'identifier': 'servo_controller', 'rc': 2}
+[6.264433] (-) EventReactorShutdown: {}

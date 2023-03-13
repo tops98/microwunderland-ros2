@@ -1,0 +1,15 @@
+[35m[1mConsolidate compiler generated dependencies of target servoTest[0m
+[ 14%] [32mBuilding CXX object CMakeFiles/servoTest.dir/src/Servomotor.cpp.o[0m
+[01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:[m[K In constructor ‘[01m[KServomotor::Servomotor(std::shared_ptr<AbstractPwmController>, uint8_t, uint32_t, uint32_t, uint16_t, uint32_t)[m[K’:
+[01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:20:33:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[KAbstractPwmController::enablePwmPin(uint8_t&)[m[K’
+   20 |     [01;31m[KpwmController_->enablePwmPin(servoPin)[m[K;
+      |     [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~[m[K
+In file included from [01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/Servomotor.hpp:5[m[K,
+                 from [01m[K/ros2_workspace/src_/servo_controller/src/Servomotor.cpp:1[m[K:
+[01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kvirtual void AbstractPwmController::enablePwmPin(uint8_t, bool)[m[K’
+   60 |         virtual void [01;36m[KenablePwmPin[m[K(uint8_t pin, bool pwmOn)=0;
+      |                      [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/ros2_workspace/src_/servo_controller/include/servo_controller/AbstractPwmController.hpp:60:22:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 1 provided
+gmake[2]: *** [CMakeFiles/servoTest.dir/build.make:118: CMakeFiles/servoTest.dir/src/Servomotor.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/servoTest.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

@@ -1,0 +1,126 @@
+[1.707s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[1.709s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=12, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x55046a8a00>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x5503d01e40>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x5503d01e40>>, mixin_verb=('build',))
+[1.841s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.845s] INFO:colcon.colcon_metadata.package_discovery.colcon_meta:Using configuration from '/root/.colcon/metadata/default/Gazebo.meta'
+[1.849s] INFO:colcon.colcon_metadata.package_discovery.colcon_meta:Using configuration from '/root/.colcon/metadata/default/fastrtps.meta'
+[1.849s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.850s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.851s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/ros2_workspace/src_'
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.929s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.929s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.929s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.929s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.930s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.930s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.931s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.931s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.931s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.932s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.932s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.933s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.933s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.933s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.934s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extensions ['ignore', 'ignore_ament_install']
+[1.934s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extension 'ignore'
+[1.935s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extension 'ignore_ament_install'
+[1.935s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extensions ['colcon_pkg']
+[1.935s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extension 'colcon_pkg'
+[1.935s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extensions ['colcon_meta']
+[1.936s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extension 'colcon_meta'
+[1.936s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extensions ['ros']
+[1.936s] Level 1:colcon.colcon_core.package_identification:_identify(servo_controller) by extension 'ros'
+[1.954s] DEBUG:colcon.colcon_core.package_identification:Package 'servo_controller' with type 'ros.ament_cmake' and name 'servo_controller'
+[1.954s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.955s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.955s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.955s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.955s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[2.091s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_args' from command line to 'None'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_target' from command line to 'None'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_clean_cache' from command line to 'False'
+[2.093s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_clean_first' from command line to 'False'
+[2.093s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_force_configure' from command line to 'False'
+[2.093s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'ament_cmake_args' from command line to 'None'
+[2.093s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'catkin_cmake_args' from command line to 'None'
+[2.093s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.094s] DEBUG:colcon.colcon_core.verb:Building package 'servo_controller' with the following arguments: {'ament_cmake_args': None, 'build_base': '/ros2_workspace/src_/build/servo_controller', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/ros2_workspace/src_/install/servo_controller', 'merge_install': False, 'path': '/ros2_workspace/src_/servo_controller', 'symlink_install': True, 'test_result_base': None}
+[2.099s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.131s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.135s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/ros2_workspace/src_/servo_controller' with build type 'ament_cmake'
+[2.136s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/ros2_workspace/src_/servo_controller'
+[2.180s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.182s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.182s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.307s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+[8.851s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ros2_workspace/src_/build/servo_controller -- -j12 -l12
+[10.132s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/ros2_workspace/src_/build/servo_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ros2_workspace/src_/build/servo_controller
+[12.072s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(servo_controller)
+[12.081s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/ros2_workspace/src_/build/servo_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ros2_workspace/src_/build/servo_controller
+[12.113s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller' for CMake module files
+[12.118s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller' for CMake config files
+[12.119s] Level 1:colcon.colcon_core.shell:create_environment_hook('servo_controller', 'cmake_prefix_path')
+[12.129s] INFO:colcon.colcon_core.shell:Creating environment hook '/ros2_workspace/src_/install/servo_controller/share/servo_controller/hook/cmake_prefix_path.ps1'
+[12.134s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/ros2_workspace/src_/install/servo_controller/share/servo_controller/hook/cmake_prefix_path.dsv'
+[12.137s] INFO:colcon.colcon_core.shell:Creating environment hook '/ros2_workspace/src_/install/servo_controller/share/servo_controller/hook/cmake_prefix_path.sh'
+[12.145s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/lib'
+[12.146s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/bin'
+[12.147s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/lib/pkgconfig/servo_controller.pc'
+[12.158s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/lib/python3.10/site-packages'
+[12.160s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/bin'
+[12.181s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.ps1'
+[12.189s] INFO:colcon.colcon_core.shell:Creating package descriptor '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.dsv'
+[12.192s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.sh'
+[12.198s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.bash'
+[12.203s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.zsh'
+[12.206s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/ros2_workspace/src_/install/servo_controller/share/colcon-core/packages/servo_controller)
+[13.343s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(servo_controller)
+[13.360s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller' for CMake module files
+[13.364s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller' for CMake config files
+[13.365s] Level 1:colcon.colcon_core.shell:create_environment_hook('servo_controller', 'cmake_prefix_path')
+[13.377s] INFO:colcon.colcon_core.shell:Creating environment hook '/ros2_workspace/src_/install/servo_controller/share/servo_controller/hook/cmake_prefix_path.ps1'
+[13.380s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/ros2_workspace/src_/install/servo_controller/share/servo_controller/hook/cmake_prefix_path.dsv'
+[13.382s] INFO:colcon.colcon_core.shell:Creating environment hook '/ros2_workspace/src_/install/servo_controller/share/servo_controller/hook/cmake_prefix_path.sh'
+[13.387s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/lib'
+[13.388s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/bin'
+[13.388s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/lib/pkgconfig/servo_controller.pc'
+[13.391s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/lib/python3.10/site-packages'
+[13.394s] Level 1:colcon.colcon_core.environment:checking '/ros2_workspace/src_/install/servo_controller/bin'
+[13.415s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.ps1'
+[13.418s] INFO:colcon.colcon_core.shell:Creating package descriptor '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.dsv'
+[13.422s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.sh'
+[13.425s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.bash'
+[13.428s] INFO:colcon.colcon_core.shell:Creating package script '/ros2_workspace/src_/install/servo_controller/share/servo_controller/package.zsh'
+[13.430s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/ros2_workspace/src_/install/servo_controller/share/colcon-core/packages/servo_controller)
+[13.431s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[13.432s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[13.432s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[13.433s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[13.470s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[13.471s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[13.471s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[13.472s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[13.476s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.NotSupported: Unable to autolaunch a dbus-daemon without a $DISPLAY for X11
+[13.477s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[13.497s] INFO:colcon.colcon_core.shell:Creating prefix script '/ros2_workspace/src_/install/local_setup.ps1'
+[13.505s] INFO:colcon.colcon_core.shell:Creating prefix util module '/ros2_workspace/src_/install/_local_setup_util_ps1.py'
+[13.523s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/ros2_workspace/src_/install/setup.ps1'
+[13.537s] INFO:colcon.colcon_core.shell:Creating prefix script '/ros2_workspace/src_/install/local_setup.sh'
+[13.543s] INFO:colcon.colcon_core.shell:Creating prefix util module '/ros2_workspace/src_/install/_local_setup_util_sh.py'
+[13.548s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/ros2_workspace/src_/install/setup.sh'
+[13.563s] INFO:colcon.colcon_core.shell:Creating prefix script '/ros2_workspace/src_/install/local_setup.bash'
+[13.568s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/ros2_workspace/src_/install/setup.bash'
+[13.578s] INFO:colcon.colcon_core.shell:Creating prefix script '/ros2_workspace/src_/install/local_setup.zsh'
+[13.583s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/ros2_workspace/src_/install/setup.zsh'
