@@ -7,10 +7,23 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
 find_library(wiringPi_LIB wiringPi)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+
+# generate custom interfaces
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/StringUint16Pair.msg"
+  "srv/GetAvailableStates.srv"
+  "srv/GetCurrentState.srv"
+  "srv/SetState.srv"
+  ADD_LINTER_TESTS
+)
+
+# set support for using custom interfaces in c++ from this package
+rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
+
 
 # include header files
 include_directories(include)
@@ -20,7 +33,8 @@ file(GLOB SOURCES "src/*.cpp")
 
 # add executeables
 add_executable(servoTest ${SOURCES})
-target_link_libraries(servoTest ${wiringPi_LIB})
+ament_target_dependencies(servoTest rclcpp)
+target_link_libraries(servoTest ${wiringPi_LIB} ${cpp_typesupport_target})
 
 
 #config ros2 cli tools
