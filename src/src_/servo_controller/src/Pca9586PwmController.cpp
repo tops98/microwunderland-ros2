@@ -1,7 +1,7 @@
 #include "servo_controller/Pca9586PwmController.hpp"
 
 // package
-#include "servo_controller/PCA9586_Registers.h"
+#include "servo_controller/PCA9586_Registers.hpp"
 // external
 #include <wiringPi.h>
 // std

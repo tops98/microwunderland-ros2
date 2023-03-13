@@ -90,6 +90,9 @@ typedef struct PWM_OUTPUT{
 }PwmOutput_t;
 
 
+/**
+ * map pwm register to pin nummbers
+*/
 const PwmOutput_t PIN_TO_REGISTER[]={
     {
         {{LED0_ON_L_REG_ADDRESS},{LED0_ON_H_REG_ADDRESS}},
