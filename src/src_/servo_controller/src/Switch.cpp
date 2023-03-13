@@ -9,13 +9,18 @@ Switch::Switch(
 shared_ptr<Servomotor> servo,
 unordered_map<string,uint16_t> states,
 string initialState){
+    
     if(servo == nullptr){
         throw invalid_argument("servo motor is null");
     }
-    servo_ =  servo;
+    if(states.find(initialState) == states.end()){
+        throw invalid_argument("inital state not found in available states");
+    }
     checkStates(states);
+    servo_ =  servo;
+    initialState_ = initialState;
     states_ = states;
-    
+    servo_->setAngle(states_[initialState_]);
 }
 
 void Switch::setState(string state){
