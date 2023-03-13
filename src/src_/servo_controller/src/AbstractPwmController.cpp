@@ -3,6 +3,7 @@
 
 AbstractPwmController::AbstractPwmController(uint64_t oscilatorFrequency, uint32_t pwmFrequency, uint32_t resolution){
     oscilatorFrequency_ = oscilatorFrequency;
+    resolution_ = resolution;
     setPwmFrequency(pwmFrequency);
 }
 
