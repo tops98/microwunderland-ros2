@@ -23,7 +23,7 @@ class Switch{
             std::shared_ptr<Servomotor> servo,
             std::unordered_map<std::string,std::uint16_t> states,
             std::string initialState);
-
+        
         /**
          * Changes the state of the switch to a desired new State
          * @param state name of the new state
