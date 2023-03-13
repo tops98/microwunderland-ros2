@@ -15,7 +15,9 @@ find_library(wiringPi_LIB wiringPi)
 # include header files
 include_directories(include)
 
+# add src folder to label
 file(GLOB SOURCES "src/*.cpp")
+
 # add executeables
 add_executable(servoTest ${SOURCES})
 target_link_libraries(servoTest ${wiringPi_LIB})

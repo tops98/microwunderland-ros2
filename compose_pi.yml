@@ -1,0 +1,9 @@
+services:
+  ros2_env:
+    container_name: ros2_env
+    build: .
+    image: ros2_env/raspi
+    network_mode: host
+    volumes:
+      -   - ./src:/home/ros2_workspace
+    command: tail -F anything

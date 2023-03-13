@@ -8,5 +8,5 @@ services:
     devices:
       - /dev/gpiomem
     volumes:
-      - ./mounted:/ros2_workspace
+      - ./src:/ros2_workspace
     command: tail -F anything
