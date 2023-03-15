@@ -3,6 +3,7 @@
 
 // ros2
 #include <rclcpp/rclcpp.hpp>
+#include <rcl_interfaces/msg/set_parameters_result.hpp>
 // package
 #include <servo_controller/Switch.hpp>
 #include <servo_controller/srv/get_available_states.hpp>
@@ -11,6 +12,7 @@
 //std
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 typedef servo_controller::srv::GetAvailableStates GetAvailableStatesService;
 typedef servo_controller::srv::GetCurrentState GetCurrentStateService;
@@ -28,7 +30,7 @@ class SwitchService: public rclcpp::Node{
         
     // methods:
     public:
-        SwitchService();
+        SwitchService(std::unordered_map<std::string,std::shared_ptr<Switch>> switches);
     private:
         void getAvailableStatesCallback(const GetAvailableStatesService::Request::SharedPtr request, GetAvailableStatesService::Response::SharedPtr response);
         void getCurrentStateCallback(const GetCurrentStateService::Request::SharedPtr request, GetCurrentStateService::Response::SharedPtr response);

@@ -1,27 +1,33 @@
 #include "servo_controller/SwitchService.hpp"
 #include <servo_controller/msg/string_uint16_pair.hpp>
+#include <servo_controller/msg/switch_config.hpp>
 // std
 #include <vector>
+#include <functional>
 
 typedef servo_controller::msg::StringUint16Pair SwitchState;
 
 using namespace std;
 
 
-SwitchService::SwitchService(): Node("Switch_Service"){
+SwitchService::SwitchService(unordered_map<string,shared_ptr<Switch>> switches):
+Node("Switch_Service"){
+
+    switches_ = switches_;
+
     getAvailableStatesService_ = create_service<GetAvailableStatesService>("get_available_states",
-        std::bind(&SwitchService::getAvailableStatesCallback,
-        this, std::placeholders::_1, std::placeholders::_2)
+        bind(&SwitchService::getAvailableStatesCallback,
+        this, placeholders::_1, placeholders::_2)
     );
 
     getCurrentStateService_ = create_service<GetCurrentStateService>("get_current_state",
-        std::bind(&SwitchService::getCurrentStateCallback,
-        this, std::placeholders::_1, std::placeholders::_2)
+        bind(&SwitchService::getCurrentStateCallback,
+        this, placeholders::_1, placeholders::_2)
     );
 
     setStateService_ = create_service<SetStateService>("set_state_service",
-        std::bind(&SwitchService::setStateCallback,
-        this, std::placeholders::_1, std::placeholders::_2)
+        bind(&SwitchService::setStateCallback,
+        this, placeholders::_1, placeholders::_2)
     );
 }
 
@@ -73,8 +79,9 @@ void SwitchService::setStateCallback(const SetStateService::Request::SharedPtr r
 }
 
 int main(int argc, char* argv[]){
+    string configPath = string(argv[1]).substr(string(argv[1]).find("--servo_config"));
     rclcpp::init(argc,argv);
-    rclcpp::spin(std::make_shared<SwitchService>());
+    rclcpp::spin(make_shared<SwitchService>());
     rclcpp::shutdown();
 
     return 0;
