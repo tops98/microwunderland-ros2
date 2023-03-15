@@ -17,11 +17,14 @@ string initialState){
         throw invalid_argument("inital state not found in available states");
     }
     checkStates(states);
-    servo_ =  servo;
-    initialState_ = initialState;
     states_ = states;
+    initialState_ = initialState;
+    servo_ =  servo;
     servo_->setAngle(states_[initialState_]);
 }
+
+Switch::Switch(std::shared_ptr<Servomotor> servo, SwitchConfig_t config):
+Switch(servo, *config.states.get(), config.initial_state){}
 
 void Switch::setState(string state){
     auto stateElement = states_.find(state);
@@ -30,6 +33,11 @@ void Switch::setState(string state){
     }
     servo_->setAngle(stateElement->second);
     currentState_ = state;
+}
+
+void Switch::setAvailableStates(std::unordered_map<std::string,std::uint16_t> newStates){
+    checkStates(newStates);
+    states_ = newStates;
 }
 
 unordered_map<string,uint16_t> Switch::getAvailableStates(){
