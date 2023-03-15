@@ -1,0 +1,23 @@
+switch_configurations:
+  - name: "Switch_1"
+    servo_config: "Modelcraft_RS-2"
+    pwm_pin: 26
+    initial_state: "center"
+    states:
+      left: 0
+      center: 90
+      right: 180
+
+
+servomotor_configurations:
+  Modelcraft_RS-2:
+    frequency: 50
+    min_pulse: 540
+    max_pulse: 2470
+    actuation_range: 203
+
+  TowerPro_SG90:
+    frequency: 50
+    min_pulse: 500
+    max_pulse: 2400
+    actuation_range: 180
