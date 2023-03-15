@@ -8,6 +8,15 @@
 #include <stdexcept>
 
 
+typedef struct ServomotorConfig_t{
+    std::uint32_t min_pulse;         
+    std::uint32_t max_pulse;        
+    std::uint16_t actuation_range;
+    std::uint32_t working_frequency;
+    std::uint8_t  pin_number;
+};
+
+
 class Servomotor{
     //member varibales:
     private:
@@ -35,6 +44,10 @@ class Servomotor{
             uint16_t actuationRange = 180,
             uint32_t frequnecy = 50);
 
+        Servomotor(std::shared_ptr<AbstractPwmController> pwmController, ServomotorConfig_t config);
+
+        ~Servomotor();
+
         /**
          * Sets the new position of the servomotor
          * @param angle new position in degree
@@ -47,6 +60,27 @@ class Servomotor{
          * @return range in degree
         */
         uint16_t getActuationRange();
+
+        /**
+         * Set min pulse length
+         * @param pulseLength length of the shortest pulse length allowed in microseconds
+        */
+        void setMinPulse(uint32_t pulseLength);
+        /**
+         * Set max pulse length
+         * @param pulseLength length of the longest pulse length allowed in microseconds
+        */
+        void setMaxPulse(uint32_t pulseLength);
+        /**
+         * Sets the Actuation range of the servo
+         * @param actuationRange maximal range of motion in degree 
+        */
+        void setActuationRange(uint16_t actuationRange);
+        /**
+         * Set the pwm frequency used for communicating with the servomotor
+         * @param frequency frequency in hz
+        */
+        void setFrequency(uint32_t frequency);
 
     private:
         /**
