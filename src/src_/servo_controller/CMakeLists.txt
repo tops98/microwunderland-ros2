@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 find_library(wiringPi_LIB wiringPi)
 
@@ -32,14 +33,14 @@ include_directories(include)
 file(GLOB SOURCES "src/*.cpp")
 
 # add executeables
-add_executable(servoTest ${SOURCES})
-ament_target_dependencies(servoTest rclcpp)
-target_link_libraries(servoTest ${wiringPi_LIB} ${cpp_typesupport_target})
+add_executable(SwitchService ${SOURCES})
+ament_target_dependencies(SwitchService rclcpp yaml-cpp)
+target_link_libraries(SwitchService ${wiringPi_LIB} ${cpp_typesupport_target})
 
 
 #config ros2 cli tools
 install(TARGETS
-  servoTest
+  SwitchService
   DESTINATION lib/${PROJECT_NAME}
 )
 
