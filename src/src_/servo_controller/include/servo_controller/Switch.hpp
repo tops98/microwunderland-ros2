@@ -9,6 +9,15 @@
 #include <memory>
 #include <stdint.h>
 
+
+typedef struct SwitchConfig_t{
+    std::string switch_name;
+    ServomotorConfig_t servomotor;
+    std::string initial_state;
+    std::shared_ptr<std::unordered_map<std::string,std::uint16_t>> states;
+};
+
+
 class Switch{
     //member varibales:
     private:
@@ -24,12 +33,20 @@ class Switch{
             std::unordered_map<std::string,std::uint16_t> states,
             std::string initialState);
         
+        Switch(std::shared_ptr<Servomotor> servo, SwitchConfig_t config);
+
         /**
          * Changes the state of the switch to a desired new State
          * @param state name of the new state
          * @throws invalid_argument if the name of the state is unkown 
         */
         void setState(std::string state);
+
+        /**
+         * Replace the old list of states with a new one
+         * @param newStates map with all possible states composed of a name and a position
+        */
+        void setAvailableStates(std::unordered_map<std::string,std::uint16_t> newStates);
 
         /**
          * Get all available states of the switch.
