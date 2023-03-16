@@ -35,7 +35,7 @@ file(GLOB SOURCES "src/*.cpp")
 # add executeables
 add_executable(SwitchService ${SOURCES})
 ament_target_dependencies(SwitchService rclcpp yaml-cpp)
-target_link_libraries(SwitchService ${wiringPi_LIB} ${cpp_typesupport_target})
+target_link_libraries(SwitchService ${wiringPi_LIB} yaml-cpp ${cpp_typesupport_target})
 
 
 #config ros2 cli tools
