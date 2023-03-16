@@ -15,7 +15,7 @@ typedef struct SwitchConfig_t{
     ServomotorConfig_t servomotor;
     std::string initial_state;
     std::shared_ptr<std::unordered_map<std::string,std::uint16_t>> states;
-};
+}SwitchConfig_t;
 
 
 class Switch{

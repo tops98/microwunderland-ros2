@@ -14,7 +14,7 @@ typedef struct ServomotorConfig_t{
     std::uint16_t actuation_range;
     std::uint32_t working_frequency;
     std::uint8_t  pin_number;
-};
+}ServomotorConfig_t;
 
 
 class Servomotor{
