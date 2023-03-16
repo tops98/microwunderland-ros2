@@ -39,7 +39,7 @@ class AbstractPwmController{
          * @param frequency Target base frequeny.
          * @param resolution Target resolution if not set 4096 will be used as default.
          */
-        virtual void setPwmFrequency(uint32_t frequency);
+        void setPwmFrequency(uint32_t frequency);
 
         /**
          * Returns the base frequency of the pwm controller.
@@ -74,6 +74,12 @@ class AbstractPwmController{
          * @param prescalerVal value of the prescaler register
         */
         virtual void setPrescaler(uint32_t prescalerVal)=0;
+
+        /**
+         * Sets the value of the the range register
+         * @param resolution resolution/range
+        */
+        virtual void setResolution(uint32_t resolution)=0;
 
         /**
          * Converts a desired Pulse width in microseconds

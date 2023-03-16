@@ -4,7 +4,8 @@
 // std
 #include <unordered_map>
 // package
-#include "servo_controller/AbstractPwmController.hpp"
+#include <servo_controller/AbstractPwmController.hpp>
+#include <servo_controller/DisableWaring.h>
 // external package
 #include <wiringPiI2C.h>
 
@@ -32,16 +33,6 @@ class Pca9586PwmController: public AbstractPwmController{
             uint8_t deviceId,
             uint64_t oscilatorFrequency=PCA_OSCILATOR_FREQ,
             uint32_t pwmFrequency=DEFAULT_PWM_FREQU);
-        
-        /**
-         * Set base frequency of the pwm signal.
-         * The prescaler value will be ajusted automaticly.
-         * NOTE: The actual frequency might deviate sligthly from the
-         * desired frequency due to rounding errors.
-         * @param frequency Target base frequeny.
-         * @param resolution Target resolution if not set 4096 will be used as default.
-         */
-        void setPwmFrequency(uint32_t frequency) override;
 
         /**
          * Enables or disables pwm on a given pin.
@@ -93,6 +84,17 @@ class Pca9586PwmController: public AbstractPwmController{
          * @param prescalerVal value of the prescaler register
         */
         void setPrescaler(uint32_t prescalerVal) override;
+
+DISABLE_WARNING_PUSH
+DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
+        /**
+         * Sets the value of the the range register
+         * NOTE: The PCA9586 does not support variable resolution
+         * so calling this function wont do anything!!!
+         * @param resolution resolution/range
+        */
+        void setResolution(uint32_t resolution)override{};
+DISABLE_WARNING_POP
 
         /**
          * Enables or dissables the sleep mode of the pca9685.

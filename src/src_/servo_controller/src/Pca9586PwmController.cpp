@@ -22,11 +22,6 @@ AbstractPwmController(oscilatorFrequency,pwmFrequency, PCA_PWM_RESOLUTION){
     setSleepMode(false);
 }
 
-void Pca9586PwmController::setPwmFrequency(uint32_t frequency){
-    AbstractPwmController::setPwmFrequency(frequency);
-    setPrescaler(prescaler_);
-}
-
 void Pca9586PwmController::setPrescaler(uint32_t prescalerVal){
     setSleepMode(true);
     wiringPiI2CWriteReg8(deviceFileHandle_,PRE_SCALE_REG_ADDRESS,prescalerVal);
