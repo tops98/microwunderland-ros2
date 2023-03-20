@@ -1,4 +1,4 @@
-#include "servo_controller/SwitchService.hpp"
+#include "servo_controller/ros_nodes/SwitchService.hpp"
 #include <servo_controller/msg/string_uint16_pair.hpp>
 #include <servo_controller/msg/switch_config.hpp>
 // std
@@ -13,7 +13,7 @@ using namespace std;
 SwitchService::SwitchService(unordered_map<string,shared_ptr<Switch>> switches):
 Node("Switch_Service"){
 
-    switches_ = switches_;
+    switches_ = switches;
 
     getAvailableStatesService_ = create_service<GetAvailableStatesService>("get_available_states",
         bind(&SwitchService::getAvailableStatesCallback,
@@ -81,7 +81,7 @@ void SwitchService::setStateCallback(const SetStateService::Request::SharedPtr r
 int main(int argc, char* argv[]){
     string configPath = string(argv[1]).substr(string(argv[1]).find("--servo_config"));
     rclcpp::init(argc,argv);
-    rclcpp::spin(make_shared<SwitchService>());
+    // rclcpp::spin(make_shared<SwitchService>());
     rclcpp::shutdown();
 
     return 0;

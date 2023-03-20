@@ -4,8 +4,8 @@
 // std
 #include <unordered_map>
 // package
-#include <servo_controller/AbstractPwmController.hpp>
-#include <servo_controller/DisableWaring.h>
+#include <servo_controller/pwm_controller/AbstractPwmController.hpp>
+#include <servo_controller/utils/DisableWaring.h>
 // external package
 #include <wiringPiI2C.h>
 

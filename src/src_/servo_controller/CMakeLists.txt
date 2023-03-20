@@ -30,7 +30,7 @@ rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_t
 include_directories(include)
 
 # add src folder to label
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # add executeables
 add_executable(SwitchService ${SOURCES})

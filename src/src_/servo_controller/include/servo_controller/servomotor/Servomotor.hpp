@@ -2,7 +2,7 @@
 #define SERVOMOTOR_HPP
 
 // package
-#include <servo_controller/AbstractPwmController.hpp>
+#include <servo_controller/pwm_controller/AbstractPwmController.hpp>
 // std
 #include <memory>
 #include <stdexcept>

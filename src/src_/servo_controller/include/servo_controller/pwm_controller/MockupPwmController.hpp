@@ -1,8 +1,8 @@
 #ifndef MOCKUPPWMCONTROLLER_HPP
 #define MOCKUPPWMCONTROLLER_HPP
 
-#include <servo_controller/AbstractPwmController.hpp>
-#include <servo_controller/DisableWaring.h>
+#include <servo_controller/pwm_controller/AbstractPwmController.hpp>
+#include <utils/DisableWaring.h>
 
 
 class MockupPwmController: public AbstractPwmController{

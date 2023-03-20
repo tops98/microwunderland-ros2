@@ -5,7 +5,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rcl_interfaces/msg/set_parameters_result.hpp>
 // package
-#include <servo_controller/Switch.hpp>
+#include <servo_controller/switch/Switch.hpp>
 #include <servo_controller/srv/get_available_states.hpp>
 #include <servo_controller/srv/get_current_state.hpp>
 #include <servo_controller/srv/set_state.hpp>

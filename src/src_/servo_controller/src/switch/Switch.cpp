@@ -1,4 +1,4 @@
-#include "servo_controller/Switch.hpp"
+#include "servo_controller/switch/Switch.hpp"
 // std
 #include <stdexcept>
 

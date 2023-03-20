@@ -1,4 +1,4 @@
-#include "servo_controller/PiPwmController.hpp"
+#include "servo_controller/pwm_controller/PiPwmController.hpp"
 
 
 PiPwmController::PiPwmController(

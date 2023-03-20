@@ -1,4 +1,4 @@
-#include "servo_controller/Servomotor.hpp"
+#include "servo_controller/servomotor/Servomotor.hpp"
 
 using namespace std;
 

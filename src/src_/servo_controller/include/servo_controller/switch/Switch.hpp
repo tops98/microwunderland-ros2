@@ -2,7 +2,7 @@
 #define SWITCH_HPP
 
 // package
-#include <servo_controller/Servomotor.hpp>
+#include <servo_controller/servomotor/Servomotor.hpp>
 // std
 #include <unordered_map>
 #include <string>

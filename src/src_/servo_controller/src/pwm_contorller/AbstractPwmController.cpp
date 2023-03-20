@@ -1,4 +1,4 @@
-#include "servo_controller/AbstractPwmController.hpp"
+#include "servo_controller/pwm_controller/AbstractPwmController.hpp"
 
 
 AbstractPwmController::AbstractPwmController(uint64_t oscilatorFrequency, uint32_t pwmFrequency, uint32_t resolution){

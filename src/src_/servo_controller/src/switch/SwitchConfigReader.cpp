@@ -1,4 +1,4 @@
-#include "servo_controller/SwitchConfigReader.hpp"
+#include "servo_controller/switch/SwitchConfigReader.hpp"
 #include <iostream>
 #include <stdint.h>
 

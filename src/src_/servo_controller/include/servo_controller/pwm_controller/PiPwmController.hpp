@@ -2,7 +2,7 @@
 #define PIPWMCONTROLLER_HPP
 
 // package
-#include "servo_controller/AbstractPwmController.hpp"
+#include <servo_controller/pwm_controller/AbstractPwmController.hpp>
 // external package
 #include <wiringPi.h>
 
