@@ -66,7 +66,7 @@ void Servomotor::setFrequency(uint32_t frequency){
 
 
 void Servomotor::setAngle(uint16_t angle){
-    if(angle >= actuationRange_){
+    if(angle > actuationRange_){
         throw invalid_argument("angle must be within actuation range");
     }
     uint32_t pulse = pulseLengthPerDegree_* angle + minPulse_;
