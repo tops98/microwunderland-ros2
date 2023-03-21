@@ -63,12 +63,26 @@ class Switch{
 
     private:
         /**
+         * Checks if all params of the switch are okay
+         * @param states states to be checked
+         * @param initialState initial state of the switch
+         * @param servo servomotor used
+         * @throw out_of_range when a states position is not within 
+         * the servomotors actuation range
+         * @throw invlaid_argument when initial state can not be found in states,
+         * or servomor is a nullptr
+         * 
+        */
+        void checkParams(const unordered_map<string,uint16_t> &states, const string initialState, shared_ptr<Servomotor> servo);
+
+        /**
          * Checks if all states are within the actuation range of the used servo
          * @param states states to be checked
+         * @param actuationRange actuation range of the servo
          * @throw out_of_range when a states position is not within 
          * the servomotors actuation range
         */
-        void checkStates(const std::unordered_map<std::string,std::uint16_t> &states);
+        void checkStates(const unordered_map<string,uint16_t> &states, uint16_t actuationRange);
         
 };
 #endif
