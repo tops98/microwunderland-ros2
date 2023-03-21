@@ -1,9 +1,14 @@
 #include "servo_controller/ros_nodes/SwitchService.hpp"
 #include <servo_controller/msg/string_uint16_pair.hpp>
-#include <servo_controller/msg/switch_config.hpp>
+#include <servo_controller/servomotor/Servomotor.hpp>
+#include <servo_controller/pwm_controller/MockupPwmController.hpp>
+#include <servo_controller/pwm_controller/Pca9586PwmController.hpp>
+#include <servo_controller/pwm_controller/PiPwmController.hpp>
+#include <servo_controller/switch/SwitchConfigReader.hpp>
 // std
 #include <vector>
 #include <functional>
+#include <stdexcept>
 
 typedef servo_controller::msg::StringUint16Pair SwitchState;
 
@@ -78,10 +83,67 @@ void SwitchService::setStateCallback(const SetStateService::Request::SharedPtr r
     response->status = 0;
 }
 
+unordered_map<string,shared_ptr<Switch>> switchFactory(shared_ptr<AbstractPwmController> pwmController, vector<SwitchConfig_t> configs){
+    unordered_map<string,shared_ptr<Switch>> switchMap;
+    for( auto config : configs){
+        auto servo = make_shared<Servomotor>(pwmController,config.servomotor);
+        auto a = make_shared<Switch>(servo,config);
+    }
+    return switchMap;
+}
+
+arguments_t parseArguments(int argc, char* argv[]){
+    string controllerType ="";
+    arguments_t result;
+    result.success = false;
+    if(argc < 3){
+        result.erro_msg = "invalid number of arguments";
+        return result;
+    }
+
+    result.path_to_config = argv[1];
+    controllerType = argv[2];
+    if(controllerType == "mockup"){
+        result.pwm_controller = make_shared<MockupPwmController>();
+        result.success = true;
+    }
+    if(controllerType == "pi"){
+        result.pwm_controller = make_shared<PiPwmController>();
+        result.success = true;
+    }
+    if(controllerType == "pca9586"){
+        int address = -1;
+
+        if(argc <4){
+            result.erro_msg = "missing argument; 3. argument is required if controller type is pca9586";
+        }
+        try{
+            address = stoi(string(argv[3]), 0, 16);
+        }catch( const exception& ex){
+            result.erro_msg = "invalid i2c address format; address is expected in hex";
+        }
+        result.pwm_controller = make_shared<Pca9586PwmController>(address);
+        result.success = true;
+    }
+    return result;
+}
+
 int main(int argc, char* argv[]){
-    string configPath = string(argv[1]).substr(string(argv[1]).find("--servo_config"));
+
+    auto args = parseArguments(argc,argv);
+
+    if(!args.success){
+        cout<<"Argument error!"<<endl;
+        cout<<args.erro_msg<<endl;
+        std::cout<<"\nHELP:\n"<<HELP_TEXT<<std::endl;
+        return 0;
+    }
+
+    auto configs = SwitchConfigReader::readSwitchConfig(args.path_to_config);
+    auto switches = switchFactory(args.pwm_controller,configs);
+    
     rclcpp::init(argc,argv);
-    // rclcpp::spin(make_shared<SwitchService>());
+    rclcpp::spin(make_shared<SwitchService>(switches));
     rclcpp::shutdown();
 
     return 0;

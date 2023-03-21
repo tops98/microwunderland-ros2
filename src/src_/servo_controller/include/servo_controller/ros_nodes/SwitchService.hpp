@@ -18,6 +18,20 @@ typedef servo_controller::srv::GetAvailableStates GetAvailableStatesService;
 typedef servo_controller::srv::GetCurrentState GetCurrentStateService;
 typedef servo_controller::srv::SetState SetStateService;
 
+#define HELP_TEXT "\
+Switch service node\n\
+Usage: ros2 run servo_controller SwitchService [path to switch config] [pwm controller type: pi| pca9586 | mockup] [i2c adress in hex if pca9586 is used]\n\n\
+This node creates a service to remote control all in the switch_config.yaml file\
+specified switches if connected to the device\n"
+
+
+typedef struct arguments_t{
+    std::shared_ptr<AbstractPwmController> pwm_controller;
+    std::string path_to_config;
+    string erro_msg;
+    bool success;
+}arguments_t;
+
 
 class SwitchService: public rclcpp::Node{
     //member varibales:
