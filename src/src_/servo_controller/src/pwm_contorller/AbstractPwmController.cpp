@@ -1,4 +1,5 @@
 #include "servo_controller/pwm_controller/AbstractPwmController.hpp"
+#include <iostream>
 
 
 AbstractPwmController::AbstractPwmController(uint64_t oscilatorFrequency, uint32_t pwmFrequency, uint32_t resolution){
@@ -10,8 +11,6 @@ AbstractPwmController::AbstractPwmController(uint64_t oscilatorFrequency, uint32
 void AbstractPwmController::setPwmFrequency(uint32_t frequency){
     prescaler_ = GET_DIVIDER_FOR_FREQ(oscilatorFrequency_,frequency,resolution_);
     recalculateUnitsPerMicrosecond();
-    setPrescaler(prescaler_);
-    setResolution(resolution_);
 }
 
 _Float64 AbstractPwmController::getFrequency(){

@@ -2,7 +2,8 @@
 #define MOCKUPPWMCONTROLLER_HPP
 
 #include <servo_controller/pwm_controller/AbstractPwmController.hpp>
-#include <utils/DisableWaring.h>
+#include <servo_controller/utils/DisableWaring.h>
+#include <iostream>
 
 
 class MockupPwmController: public AbstractPwmController{
@@ -13,10 +14,8 @@ class MockupPwmController: public AbstractPwmController{
         
     // methods:
     public:
-        MockupPwmController(uint64_t oscilatorFrequency,
-            uint32_t pwmFrequency=DEFAULT_PWM_FREQU,
-            uint32_t resolution=DEFAULT_RESOLUTION)
-            :AbstractPwmController(oscilatorFrequency,pwmFrequency,resolution){};
+        MockupPwmController()
+        :AbstractPwmController(19200,DEFAULT_PWM_FREQU,DEFAULT_RESOLUTION){};
 
 DISABLE_WARNING_PUSH
 DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
@@ -25,7 +24,8 @@ DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
          * @param pin selected gpio pin
          * @param pwmOn true= pwm on; false= pwm off
         */
-        virtual void enablePwmPin(uint8_t pin, bool pwmOn){};
+        virtual void enablePwmPin(uint8_t pin, bool pwmOn){
+        };
 
         /**
          * Set target pulse width on the selected pwm output.
@@ -34,7 +34,8 @@ DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
          * @param pulseWidth Pulse width in microseconds.
          * @param pin Selected PWM pin.
          */
-        void setPulseWidth( uint8_t pin, uint32_t pulseWidth){}
+        void setPulseWidth( uint8_t pin, uint32_t pulseWidth){
+        }
 
     private:
         /**
@@ -49,7 +50,8 @@ DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
          * Sets the value of the the range register
          * @param resolution resolution/range
         */
-        void setResolution(uint32_t resolution) override{};     
+        void setResolution(uint32_t resolution) override{
+        };     
 DISABLE_WARNING_POP   
 };
 #endif

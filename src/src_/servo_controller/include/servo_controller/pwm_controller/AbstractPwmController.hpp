@@ -37,7 +37,6 @@ class AbstractPwmController{
          * NOTE: The actual frequency might deviate sligthly from the
          * desired frequency due to rounding errors.
          * @param frequency Target base frequeny.
-         * @param resolution Target resolution if not set 4096 will be used as default.
          */
         void setPwmFrequency(uint32_t frequency);
 

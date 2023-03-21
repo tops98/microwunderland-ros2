@@ -35,6 +35,15 @@ class Pca9586PwmController: public AbstractPwmController{
             uint32_t pwmFrequency=DEFAULT_PWM_FREQU);
 
         /**
+         * Set base frequency of the pwm signal.
+         * The prescaler value will be ajusted automaticly.
+         * NOTE: The actual frequency might deviate sligthly from the
+         * desired frequency due to rounding errors.
+         * @param frequency Target base frequeny.
+         */
+        void setPwmFrequency(uint32_t frequency);
+
+        /**
          * Enables or disables pwm on a given pin.
          * @param pin selected gpio pin
          * @param pwmOn true= pwm on; false= pwm off
