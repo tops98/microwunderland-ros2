@@ -1,0 +1,77 @@
+switch_configurations:
+  - name: "Switch_1"
+    servo_config: "Modelcraft_RS-2"
+    pwm_pin: 1
+    initial_state: "center"
+    states:
+      left: 0
+      center: 90
+      right: 180
+
+  - name: "Switch_2"
+    servo_config: "Modelcraft_RS-2"
+    pwm_pin: 12
+    initial_state: "center"
+    states:
+      left: 0
+      center: 90
+      right: 180
+
+  - name: "Switch_3"
+    servo_config: "Modelcraft_RS-2"
+    pwm_pin: 26
+    initial_state: "center"
+    states:
+      left: 0
+      center: 90
+      right: 180
+
+  - name: "Switch_4"
+    servo_config: "Modelcraft_RS-2"
+    pwm_pin: 42
+    initial_state: "half_left"
+    states:
+      left: 0
+      half_left: 45
+      center: 90
+      right: 180
+
+  - name: "Switch_5"
+    servo_config: "TowerPro_SG90"
+    pwm_pin: 69
+    initial_state: "right"
+    states:
+      center: 90
+      right: 180
+
+  - name: "Switch_6"
+    servo_config: "Modelcraft_RS-2"
+    pwm_pin: 10
+    initial_state: "center"
+    states:
+      left: 0
+      center: 90
+      right: 180
+
+  - name: "Switch_7"
+    servo_config: "TowerPro_SG90"
+    pwm_pin: 26
+    initial_state: "right"
+    states:
+      left: 0
+      center: 90
+      right: 180
+
+
+servomotor_configurations:
+  Modelcraft_RS-2:
+    frequency: 50
+    min_pulse: 540
+    max_pulse: 2470
+    actuation_range: 203
+
+  TowerPro_SG90:
+    frequency: 50
+    min_pulse: 500
+    max_pulse: 2400
+    actuation_range: 180
