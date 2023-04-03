@@ -1,0 +1,6 @@
+[submodule "src/src_/ROS-TCP-Endpoint"]
+	path = src/src_/ROS-TCP-Endpoint
+	url = https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git
+[submodule "src/dependencies/yaml-cpp"]
+	path = src/dependencies/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
