@@ -79,12 +79,12 @@
 #define PRE_SCALE_REG_ADDRESS 0xFE		// prescaler for PWM output frequency
 #define TestMode_REG_ADDRESS 0xFF		// defines the test mode to be entered
 
-typedef struct PWM_REG_ADDRESSES{
+typedef struct PwmRegAddresses{
     uint8_t low;
     uint8_t high;
 }PwmRegAddresses_t;
 
-typedef struct PWM_OUTPUT{
+typedef struct PwmOutput{
     PwmRegAddresses_t  on;
     PwmRegAddresses_t off;
 }PwmOutput_t;
