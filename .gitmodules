@@ -5,3 +5,6 @@
 [submodule "src/dependencies/yaml-cpp"]
 	path = src/dependencies/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "src/dependencies/WiringPi"]
+	path = src/dependencies/WiringPi
+	url = https://github.com/WiringPi/WiringPi.git
