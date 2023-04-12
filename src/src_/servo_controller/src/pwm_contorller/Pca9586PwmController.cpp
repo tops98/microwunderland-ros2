@@ -2,8 +2,6 @@
 
 // package
 #include "servo_controller/pwm_controller/PCA9586_Registers.hpp"
-// external
-#include <wiringPi.h>
 // std
 #include <stdexcept>
 
@@ -13,7 +11,9 @@ uint8_t deviceId,
 uint64_t oscilatorFrequency,
 uint32_t pwmFrequency):
 AbstractPwmController(oscilatorFrequency,pwmFrequency, PCA_PWM_RESOLUTION){
-    deviceFileHandle_ = wiringPiI2CSetup (deviceId);
+    i2cAdapter_ = GET_I2C_ADAPTER;
+    hardwareAdapter_ = GET_HARDWARE_ADAPTER;
+    deviceFileHandle_ = i2cAdapter_->setup(deviceId);
     if (deviceFileHandle_ == -1){
         throw "setting up wiringPiI2C failed!";
     }
@@ -29,9 +29,9 @@ void Pca9586PwmController::setPwmFrequency(uint32_t frequency){
 
 void Pca9586PwmController::setPrescaler(uint32_t prescalerVal){
     setSleepMode(true);
-    wiringPiI2CWriteReg8(deviceFileHandle_,PRE_SCALE_REG_ADDRESS,prescalerVal);
+    i2cAdapter_->writeReg8(deviceFileHandle_,PRE_SCALE_REG_ADDRESS,prescalerVal);
     setSleepMode(false);
-    delayMicroseconds(STARTUP_DELAY);
+    hardwareAdapter_->gpio_delayMicroseconds(STARTUP_DELAY);
 }
 
 void Pca9586PwmController::enablePwmPin(uint8_t pin, bool pwmOn){
@@ -72,13 +72,13 @@ void Pca9586PwmController::setSleepMode(bool enable){
 }
 
 void Pca9586PwmController::setSingleBitReg8(uint8_t address, uint8_t position, bool value){
-    uint8_t registerValue = wiringPiI2CReadReg8 (deviceFileHandle_, address);
+    uint8_t registerValue = i2cAdapter_->readReg8 (deviceFileHandle_, address);
     registerValue = (registerValue & (~(0x1<<position))) | (value<<position);
-    wiringPiI2CWriteReg8(deviceFileHandle_, address, registerValue);
+    i2cAdapter_->writeReg8(deviceFileHandle_, address, registerValue);
 }
 
 void Pca9586PwmController::setReg8(uint8_t address, uint8_t value, uint8_t mask){
-    uint8_t registerValue = wiringPiI2CReadReg8 (deviceFileHandle_, address);
+    uint8_t registerValue = i2cAdapter_->readReg8 (deviceFileHandle_, address);
     registerValue = (registerValue & mask) | (value &  ~mask);
-    wiringPiI2CWriteReg8(deviceFileHandle_, address, registerValue);
+    i2cAdapter_->writeReg8(deviceFileHandle_, address, registerValue);
 }

@@ -10,9 +10,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(yaml-cpp REQUIRED)
-
-find_library(wiringPi_LIB wiringPi)
-
+if(use_wiring_pi)
+  find_library(wiringPi_LIB wiringPi)
+endif()
 # generate custom interfaces
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/StringUint16Pair.msg"
@@ -35,8 +35,11 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 # add executeables
 add_executable(SwitchService ${SOURCES})
 ament_target_dependencies(SwitchService rclcpp yaml-cpp)
-target_link_libraries(SwitchService ${wiringPi_LIB} yaml-cpp ${cpp_typesupport_target})
-
+if(use_wiring_pi)
+  target_link_libraries(SwitchService ${wiringPi_LIB} yaml-cpp ${cpp_typesupport_target})
+else()
+  target_link_libraries(SwitchService yaml-cpp ${cpp_typesupport_target})
+endif()
 
 #config ros2 cli tools
 install(TARGETS

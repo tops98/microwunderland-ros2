@@ -4,10 +4,10 @@
 // std
 #include <unordered_map>
 // package
+#include <servo_controller/pi_hardware_adapter/hardware_adapter.hpp>
 #include <servo_controller/pwm_controller/AbstractPwmController.hpp>
 #include <servo_controller/utils/DisableWaring.h>
 // external package
-#include <wiringPiI2C.h>
 
 #define PCA_OSCILATOR_FREQ 25000000
 #define PCA_PWM_RESOLUTION 4096
@@ -25,6 +25,8 @@ class Pca9586PwmController: public AbstractPwmController{
 
     // member variables
     private:
+        BasePIi2cAdapter* i2cAdapter_;
+        BasePiHardwareAdapter* hardwareAdapter_;
         int deviceFileHandle_;
 
     // methods:

@@ -4,7 +4,7 @@
 // package
 #include <servo_controller/pwm_controller/AbstractPwmController.hpp>
 // external package
-#include <wiringPi.h>
+#include <servo_controller/pi_hardware_adapter/hardware_adapter.hpp>
 
 #define PI_OSCILATOR_FREQ 19200000
 
@@ -15,9 +15,12 @@ class PiPwmController: public AbstractPwmController{
 
     /// Possible pwm modes on Pi
     enum EpwmMode{
-        strict = PWM_MODE_MS, ///< Strict mode sends pulse at the start of the period
-        balanced = PWM_MODE_BAL ///< Balanced mode divides the pulse in smaller pulses and distrinutes the over the period evenly 
+        strict =   0,  ///< Strict mode sends pulse at the start of the period
+        balanced = 1 ///< Balanced mode divides the pulse in smaller pulses and distrinutes the over the period evenly 
     };
+
+    private:
+        BasePiHardwareAdapter* hardwareAdapter_;
 
     // methods:
     public:
