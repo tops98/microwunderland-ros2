@@ -44,7 +44,7 @@ Daniel Riege   | Studentische Hilfe      | daniel.riege@haw-hamburg.de
 | C_4 | Platform | Alle Softwareartefakte, ausgenommen Artefakte die für Mikroprozessoren (Arduino, ESP32, etc) geschrieben werden müssen, haben auf Linux lauffähig zu sein
 ## [3] Kontextabgrenzung
 ### [3.1] Technischer Kontext
-![Alt-Text](/diagramme/Systemkontext_DigitalerZwilling.jpg)
+![Alt-Text](/documentation/Systemkontext_DigitalerZwilling.jpg)
 
 ## [4] Lösungskonzept
 - Das System ist als Service Orientierte Architektur aufgebaut. Zweck der Service Orientierten Architektur ist es das ersetzen, erweitern sowie einbinden neuer Dienste möglichst einfach zu gestalten ( siehe Qualitätsziele: Q1, Q2).
