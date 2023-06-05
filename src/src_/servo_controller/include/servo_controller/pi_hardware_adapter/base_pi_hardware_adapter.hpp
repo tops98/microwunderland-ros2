@@ -16,17 +16,40 @@
 class BasePiHardwareAdapter {
 
     private:
+        // pointer to instance of the hardware adapter
         static BasePiHardwareAdapter* instance_;
     
     public:
+        /**
+         * returns a pointer to the BasePiHardwareAdapter instance.
+         * If the instance hasen't been create it will be create
+         * @return BasePiHardwareAdapter
+        */
         static BasePiHardwareAdapter* getInstance();
 
+// Disable warnigs for unused formal parameter since this just a mockup for testing
 DISABLE_WARNING_PUSH
 DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
 
+        /**
+         * Initialize the hardware interfaces
+         * @return 0 if sucess non zerro digit if error
+        */
         virtual int setup() { return 0;};
         // Base functions
+        
+        /**
+         * set the mode of a selected gpio pin (e.g INPUT, OUTPUT, PWM)
+         * @param pin pin number
+         * @param mode selected mode
+        */
         virtual void gpio_pinMode (int pin, int mode) { };
+        /**
+         * sets the pull-up or pull-down resistor mode on the given pin,
+         * which should be set as an input
+         * @param pin pin number
+         * @param pud mode
+        */
         virtual void gpio_pullUpDnControl (int pin, int pud) { };
         virtual void gpio_digitalWrite (int pin, int value) { };
         virtual void gpio_pwmWrite (int pin, int value) { };
@@ -43,7 +66,8 @@ DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
         virtual unsigned int gpio_micros (void) { return 0;};
         virtual void gpio_delay (unsigned int howLong) { };
         virtual void gpio_delayMicroseconds (unsigned int howLong) { };
-        
+
+// enable warnings again
 DISABLE_WARNING_POP  
 
     private:
