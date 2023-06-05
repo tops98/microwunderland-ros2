@@ -1,0 +1,6 @@
+# returns all available states of a switch; one states consists out of a string (name) and int (position)
+string switch_name        # name of the switch that shall be controlled
+---
+# output 
+StringUint16Pair[] states # list of available states
+uint8 status              # status code; Equals zero if all went well

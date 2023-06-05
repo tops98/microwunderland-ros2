@@ -1,0 +1,5 @@
+# returns the currently active state of a switch
+string switch_name # name of the switch that shall be controlled
+---
+string state_name  # name of the active state
+uint8 status       # status code; Equals zero if all went well

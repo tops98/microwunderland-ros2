@@ -1,0 +1,9 @@
+# Allows to export and save compressed image_msg to local storage of the service node
+string export_dir  # path to thr
+string topic_name  # name of the topic to record
+uint16 interval_ms # zero means the param will not be used
+uint16 nth_frame   # zero means the param will not be used
+uint32 max_time_ms # if zero no max time will be used
+uint16 max_frames  # if zero no frame limit will be used
+---
+uint8 status       # status of service call equals 1 if r
