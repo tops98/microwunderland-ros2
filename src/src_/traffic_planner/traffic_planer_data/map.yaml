@@ -1,0 +1,109 @@
+---
+nodes:
+  - node_name: Switch_1
+    trigger_radius: 8
+    positions:
+      x: 24.78
+      y: 100.45
+    connections:
+      - Switch_4
+      - Switch_7
+
+  - node_name: Switch_2
+    trigger_radius: 8
+    positions:
+      x: 91.77
+      y: 36.73
+    connections:
+      - Switch_6
+      - Switch_11
+
+  - node_name: Switch_3
+    trigger_radius: 8
+    positions:
+      x: 85.8
+      y: 104.11
+    connections:
+      - Switch_5
+      - Switch_8
+
+  - node_name: Switch_4
+    trigger_radius: 8
+    positions:
+      x: 67.55
+      y: 98.51001
+    connections:
+      - Switch_9
+      - Switch_8
+
+  - node_name: Switch_5
+    trigger_radius: 8
+    positions:
+      x: 35.11
+      y: 102.93
+    connections:
+      - Switch_7
+      - Switch_10
+
+  - node_name: Switch_6
+    trigger_radius: 8
+    positions:
+      x: 30.83001
+      y: 92.62
+    connections:
+      - Switch_10
+      - Switch_4
+
+  - node_name: Switch_7
+    trigger_radius: 8
+    positions:
+      x: 77.84
+      y: 30.61001
+    connections:
+      - Switch_11
+      - Switch_12
+
+  - node_name: Switch_8
+    trigger_radius: 8
+    positions:
+      x: 80.67
+      y: 46.78001
+    connections:
+      - Switch_12
+      - Switch_6
+
+  - node_name: Switch_9
+    trigger_radius: 8
+    positions:
+      x: 121.7
+      y: 98.99796
+    connections:
+      - Switch_1
+      - Switch_2
+
+  - node_name: Switch_10
+    trigger_radius: 8
+    positions:
+      x: 126.38
+      y: 111.64
+    connections:
+      - Switch_2
+      - Switch_3
+
+  - node_name: Switch_11
+    trigger_radius: 8
+    positions:
+      x: 84.68
+      y: 93.22
+    connections:
+      - Switch_5
+      - Switch_9
+
+  - node_name: Switch_12
+    trigger_radius: 8
+    positions:
+      x: 131.57
+      y: 99.79001
+    connections:
+      - Switch_3
+      - Switch_1

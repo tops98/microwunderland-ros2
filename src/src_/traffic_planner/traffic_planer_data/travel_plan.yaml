@@ -1,0 +1,36 @@
+travel_plans:
+  - vehicle_name: "Bus_1"
+    loop_plan: true
+    start_time: 15
+    checkpoints:
+      - switch_name: "Switch_2"
+        switch_state: "forward"
+      - switch_name: "Switch_6"
+        switch_state: "right"
+      - switch_name: "Switch_4"
+        switch_state: "forward"
+      - switch_name: "Switch_9"
+        switch_state: "right"
+
+  - vehicle_name: "Bus_2"
+    loop_plan: false
+    start_time: 15
+    checkpoints:
+      - switch_name: "Switch_11"
+        switch_state: "left"
+      - switch_name: "Switch_5"
+        switch_state: "right"
+      - switch_name: "Switch_10"
+        switch_state: "right"
+      - switch_name: "Switch_3"
+        switch_state: "left"
+      - switch_name: "Switch_8"
+        switch_state: "right"
+      - switch_name: "Switch_6"
+        switch_state: "right"
+      - switch_name: "Switch_4"
+        switch_state: "forward"
+      - switch_name: "Switch_9"
+        switch_state: "right"
+      - switch_name: "Switch_2"
+        switch_state: "right"
