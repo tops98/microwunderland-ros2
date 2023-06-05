@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  ros2_env_vanilla:
+    container_name: ros2_vanilla
+    build: ./Dockerfile_ros_vanilla
+    environment:
+    - MAGIC_COOKIE=${MAGIC_COOKIE}
+    network_mode: host
+    volumes:
+      - ./src:/home/ros2_workspace
+      # - /dev/shm:/dev/shm
+    command: /bin/bash -c "xauth add $MAGIC_COOKIE && tail -F anything"

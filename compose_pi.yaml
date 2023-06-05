@@ -1,9 +1,12 @@
 services:
-  ros2_env:
-    container_name: ros2_env
-    build: .
-    image: ros2_env/raspi
+  ros_env:
+    build: ./Dockerfile_ros_arm
+    image: ros2/arm_env:humble
+    container_name: ros_env
     network_mode: host
+    privileged: true
+    devices:
+      - /dev/gpiomem
     volumes:
-      -   - ./src:/home/ros2_workspace
+      - ./src:/ros2_workspace
     command: tail -F anything
