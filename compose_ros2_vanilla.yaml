@@ -1,12 +1,27 @@
 version: '3.8'
 services:
-  ros2_env_vanilla:
-    container_name: ros2_vanilla
+  ros_tcp_endpoint:
+    container_name: ros_tcp_endpoint
     build: ./Dockerfile_ros_vanilla
     environment:
     - MAGIC_COOKIE=${MAGIC_COOKIE}
+    - DISPLAY=${DISPLAY}
     network_mode: host
     volumes:
       - ./src:/home/ros2_workspace
-      # - /dev/shm:/dev/shm
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev/shm:/dev/shm
+    command: /bin/bash -c "xauth add $MAGIC_COOKIE && tail -F anything"
+
+  ros2_tf:
+    container_name: ros2_tf
+    build: ./Dockerfile_ros_tf
+    environment:
+    - MAGIC_COOKIE=${MAGIC_COOKIE}
+    - DISPLAY=${DISPLAY}
+    network_mode: host
+    volumes:
+      - ./src:/home/ros2_workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev/shm:/dev/shm
     command: /bin/bash -c "xauth add $MAGIC_COOKIE && tail -F anything"
