@@ -13,11 +13,144 @@ from cv_bridge import CvBridge
 import numpy as np
 import re
 from datetime import datetime
+from dataclasses import dataclass
+from collections import deque
+from  numpy import sin, cos, arccos
 
 import tensorflow as tf
 from typing import Dict, List
 from microwunderland_interfaces.msg import Named2DPosition
 from microwunderland_interfaces.msg import BoundingBox
+
+# Simpel Tracker that assotiates detections, using the 
+# eukledian distance, to provide reidentification.
+# Additionaly the tracker offers compensation for 
+# failed detections of previously identified objects, by 
+# extrapolating there position over a set number of samples.
+class CentroidTracker:
+
+    @dataclass
+    class TrackedObject:
+        id:np.uint8
+        pos: deque[np.ndarray]
+        predicted_pos: np.ndarray
+        undetected_cnt:np.uint8
+
+    # list of identified objects that are tracked
+    _tracked_objects: Dict[int,TrackedObject]
+    # maximum amount of frames before object will be unregistered
+    _undetected_max_cnt:np.uint8
+    # decay factor for extrapolited headings
+    _heading_decay:float
+    # maximum distance to asotiate a detection with a given object
+    _max_dist:float
+    # the next available identification number
+    _next_id:np.uint8
+
+    def __init__(self, max_distance:float, undetected_max_cnt:int, heading_decay:float) -> None:
+        self._max_dist = max_distance
+        self._undetected_max_cnt = undetected_max_cnt
+        if heading_decay <= 1 and heading_decay >= 0:
+            raise ValueError("heading_decay must be between [0 and 1] (inclusive)")
+        self._heading_decay = heading_decay
+        self._tracked_objects = dict()
+
+    def update(self, detections:np.ndarray) -> None:
+        self._find_knowen_objects(detections)
+        self._register_new_objects(detections)
+        self._remove_lost_objects()
+
+    # Tries to asociate the new detections with the knowen tracked objects.
+    # All reidentified objects will be removed from the detections list
+    # and ther positions will be updated according to the newly detected position. 
+    # @param detections: list of detections 
+    def _find_knowen_objects(self, detections:np.ndarray) -> None:
+        for tracked_obj in self._tracked_objects.values():
+            closest_detec_id = self._get_closest_detection(tracked_obj,detections)
+            if closest_detec_id != -1:
+
+                closest_detec = detections[closest_detec_id]
+                np.delete(detections,closest_detec_id)
+
+                tracked_obj.pos.append(np.array[closest_detec.x,closest_detec.y])
+                tracked_obj.undetected_cnt = 0
+            else:
+                tracked_obj.undetected_cnt +=1
+
+            tracked_obj.predicted_pos = self._predict_next_pose(tracked_obj)
+
+    # Returns the index of the detection that is closest to the given
+    # tracked object, or -1 if there is no detection within max_dist
+    #  
+    # @param tracked_object tracked object used as reference point for dist calc
+    # @param detections detections to check
+    # @returns index of closest detection or -1 if nothing is within max_dist
+    def _get_closest_detection(self,tracked_object:TrackedObject ,detections:np.ndarray) -> Named2DPosition:
+        closest_detecion_index = -1
+        min_dist = self._max_dist
+
+        for index,detection in enumerate(detections):
+            dist = np.linalg.norm(tracked_object.pos,detection)
+            if dist < min_dist:
+                min_dist =dist
+                closest_detecion_index = index
+                
+        return closest_detecion_index
+
+                
+    def _register_new_objects(self, detections:List[Named2DPosition]) -> None:
+        for detection in detections:
+            new_obj = self.TrackedObject()
+            new_obj.pos = deque(maxlen=3)
+            new_obj.pos.append(np.array[detection.x,detection.y])
+            new_obj.pos.append(np.array[detection.x,detection.y])
+            new_obj.pos.append(np.array[detection.x,detection.y])
+            new_obj.predicted_pos = np.array([detection.x,detection.y])
+            new_obj.id = self._next_id
+            self._next_id += 1
+
+            self._tracked_objects[new_obj.id] = new_obj
+    
+    def _remove_lost_objects(self):
+        for id,tracked_obj in self._tracked_objects.items():
+            if tracked_obj.undetected_cnt > self._undetected_max_cnt:
+                self._tracked_objects.pop(id)
+
+    # calculates the angle between two vectors in radients
+    def _calculate_angle_with_direction(self, vec_a:np.ndarray, vec_b:np.ndarray):
+        unit_vector_1 = vec_a / np.linalg.norm(vec_a)
+        unit_vector_2 = vec_b / np.linalg.norm(vec_b)
+        dot_product = np.dot(unit_vector_1, unit_vector_2)
+        angle = np.arccos(dot_product)
+        c = np.cross(vec_b,vec_a)
+        return angle if c>0 else angle*-1
+
+    # rotates a vector for a given angle in radients
+    def _rotate_vector(self, vec:np.ndarray, alpha_rad:float):
+        alpha_cos = cos(alpha_rad)
+        alpha_sin = sin(alpha_rad)
+
+        rot_matrix = np.array([[alpha_cos,-alpha_sin],[alpha_sin,alpha_cos]])
+        rotated_vec = np.dot(rot_matrix,vec)
+        return rotated_vec
+
+
+    def _predict_next_pose(self, positions:deque, heading_decay:float=0.5,undetected_cnt:int=0) -> np.ndarray:
+        # calculate motion vectors from last 3 samples
+        vec_a = positions[1]-positions[2]
+        vec_b = positions[0]-positions[1]
+        # calculate angle between motion vectors
+        alpha = -1*self._calculate_angle_with_direction(vec_a,vec_b)
+        # add accelaration
+        accelaration = vec_b-vec_a
+        new_vec = vec_b + accelaration
+        # apply decay if detections are missing
+        new_vec *= heading_decay**undetected_cnt
+        # rotate motion vector
+        new_pos = positions[0] + self._rotate_vector(new_vec,alpha)
+        # calculate next position
+        return new_pos
+
 
 
 class ArucuDetector:
@@ -175,14 +308,16 @@ class ObjectDetectorNode(Node):
     _bridge:CvBridge
     _object_detector:ObjectDetector
     _last_update: int
+    _debug_view: bool
 
     def __init__(self) -> None:
         super().__init__('object_detector')
 
-        self._last_update = datetime.now().microsecond
         self._bridge = CvBridge()
         self._load_params()
         self._init_detector()
+        self._last_update = datetime.now().microsecond
+        self._debug_view = self.get_parameter("debug_view").get_parameter_value().bool_value
         
         self.get_logger().info("Object Detector loaded")
         
@@ -191,9 +326,8 @@ class ObjectDetectorNode(Node):
             self.get_parameter("image_topic").get_parameter_value().string_value,
             self.image_received_cb,
             HistoryPolicy.KEEP_LAST)
-        self.get_logger().info("Subscription established")
-        
         self.subscription  # prevent unused variable warning
+        self.get_logger().info("Subscription established")
 
     def _init_detector(self):
         detector_type = self.get_parameter("detector_type").get_parameter_value().string_value
@@ -211,6 +345,7 @@ class ObjectDetectorNode(Node):
 
     def _load_params(self) -> None:
         self.declare_parameter("detector_type","tf")
+        self.declare_parameter("debug_view",False)
         self.declare_parameter("aruco_dict_type","DICT_4X4_100")
         self.declare_parameter("image_topic","cam_left/compressed")
         self.declare_parameter("model_path","/home/tobias/ros_docker/microwunderland-ros2/src/src_/object_detector/data/model.tf")
