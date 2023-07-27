@@ -47,18 +47,19 @@ class CentroidTracker:
     # the next available identification number
     _next_id:np.uint8
 
-    def __init__(self, max_distance:float, undetected_max_cnt:int, heading_decay:float) -> None:
+    def __init__(self, max_distance:float=20.0, undetected_max_cnt:int=30, heading_decay:float=1) -> None:
         self._max_dist = max_distance
         self._undetected_max_cnt = undetected_max_cnt
-        if heading_decay <= 1 and heading_decay >= 0:
+        self._next_id = 0
+        if heading_decay > 1 and heading_decay < 0:
             raise ValueError("heading_decay must be between [0 and 1] (inclusive)")
         self._heading_decay = heading_decay
         self._tracked_objects = dict()
 
     def update(self, detections:np.ndarray) -> None:
-        self._find_knowen_objects(detections)
+        detections = self._find_knowen_objects(detections)
         self._register_new_objects(detections)
-        self._remove_lost_objects()
+        # self._remove_lost_objects()
 
     # Tries to asociate the new detections with the knowen tracked objects.
     # All reidentified objects will be removed from the detections list
@@ -70,14 +71,16 @@ class CentroidTracker:
             if closest_detec_id != -1:
 
                 closest_detec = detections[closest_detec_id]
-                np.delete(detections,closest_detec_id)
-
-                tracked_obj.pos.append(np.array[closest_detec.x,closest_detec.y])
+                detections = np.delete(detections,closest_detec_id,axis=0)
+                tracked_obj.pos.appendleft(np.array([closest_detec[0],closest_detec[1]]))
                 tracked_obj.undetected_cnt = 0
             else:
+                tracked_obj.pos.appendleft(tracked_obj.predicted_pos)
                 tracked_obj.undetected_cnt +=1
 
-            tracked_obj.predicted_pos = self._predict_next_pose(tracked_obj)
+            print("pred")
+            tracked_obj.predicted_pos = self._predict_next_pose(tracked_obj.pos)
+        return detections
 
     # Returns the index of the detection that is closest to the given
     # tracked object, or -1 if there is no detection within max_dist
@@ -85,12 +88,15 @@ class CentroidTracker:
     # @param tracked_object tracked object used as reference point for dist calc
     # @param detections detections to check
     # @returns index of closest detection or -1 if nothing is within max_dist
-    def _get_closest_detection(self,tracked_object:TrackedObject ,detections:np.ndarray) -> Named2DPosition:
+    def _get_closest_detection(self,tracked_object:TrackedObject ,detections:np.ndarray) -> np.ndarray:
         closest_detecion_index = -1
         min_dist = self._max_dist
-
         for index,detection in enumerate(detections):
-            dist = np.linalg.norm(tracked_object.pos,detection)
+            vec = tracked_object.predicted_pos-detection
+            if np.all(vec==0):
+                closest_detecion_index = index
+                break
+            dist = np.linalg.norm(tracked_object.predicted_pos-detection)
             if dist < min_dist:
                 min_dist =dist
                 closest_detecion_index = index
@@ -98,23 +104,27 @@ class CentroidTracker:
         return closest_detecion_index
 
                 
-    def _register_new_objects(self, detections:List[Named2DPosition]) -> None:
+    def _register_new_objects(self, detections:np.ndarray) -> None:
         for detection in detections:
-            new_obj = self.TrackedObject()
-            new_obj.pos = deque(maxlen=3)
-            new_obj.pos.append(np.array[detection.x,detection.y])
-            new_obj.pos.append(np.array[detection.x,detection.y])
-            new_obj.pos.append(np.array[detection.x,detection.y])
-            new_obj.predicted_pos = np.array([detection.x,detection.y])
-            new_obj.id = self._next_id
+            new_obj = self.TrackedObject(
+                self._next_id,
+                deque(maxlen=3),
+                np.array([detection[0],detection[1]]),
+                0
+            )
+            new_obj.pos.append(np.array([detection[0],detection[1]]))
+            new_obj.pos.append(np.array([detection[0],detection[1]]))
+            new_obj.pos.append(np.array([detection[0],detection[1]]))
             self._next_id += 1
 
             self._tracked_objects[new_obj.id] = new_obj
+            print(f"registered new object with id{new_obj.id}")
+            
     
     def _remove_lost_objects(self):
-        for id,tracked_obj in self._tracked_objects.items():
-            if tracked_obj.undetected_cnt > self._undetected_max_cnt:
-                self._tracked_objects.pop(id)
+        for key in self._tracked_objects.keys():
+            if self._tracked_objects[key].undetected_cnt > self._undetected_max_cnt:
+                del self._tracked_objects[key]
 
     # calculates the angle between two vectors in radients
     def _calculate_angle_with_direction(self, vec_a:np.ndarray, vec_b:np.ndarray):
@@ -139,18 +149,29 @@ class CentroidTracker:
         # calculate motion vectors from last 3 samples
         vec_a = positions[1]-positions[2]
         vec_b = positions[0]-positions[1]
+        if (vec_a[0] == 0 and vec_a[1] == 0) or (vec_b[0] == 0 and vec_b[1] == 0):
+            return positions[0]
         # calculate angle between motion vectors
         alpha = -1*self._calculate_angle_with_direction(vec_a,vec_b)
         # add accelaration
-        accelaration = vec_b-vec_a
-        new_vec = vec_b + accelaration
+        accelaration = (vec_b-vec_a)*0.4
+        new_vec = vec_b 
         # apply decay if detections are missing
         new_vec *= heading_decay**undetected_cnt
         # rotate motion vector
         new_pos = positions[0] + self._rotate_vector(new_vec,alpha)
         # calculate next position
         return new_pos
+    
+    def draw_tracked_objects(self, image:np.ndarray) -> np.ndarray:
+        for key,obj in self._tracked_objects.items():
+            cv2.circle(image,obj.pos[0].astype(int),3,(0,255,0),3)
+            cv2.circle(image,obj.predicted_pos.astype(int),3,(0,0,255),3)
+            cv2.circle(image,obj.pos[0].astype(int),int(self._max_dist),(255,0,0),1)
 
+            cv2.putText(image,str(obj.id),((int(obj.pos[0][0]),int(obj.pos[0][1]))),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,0),1,cv2.LINE_AA)
+            
+        return image
 
 
 class ArucuDetector:
@@ -164,13 +185,13 @@ class ArucuDetector:
         parameters =  aruco.DetectorParameters()
         self._detector = aruco.ArucoDetector(aruco_dict,parameters)
 
-    def __detect_markers(self, image:np.ndarray):
+    def detect_markers(self, image:np.ndarray):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         (corners,ids,rejected) =  self._detector.detectMarkers(gray)
         return (corners,ids,rejected) 
     
-    def predict_positions(self, image:np.ndarray) -> List[Named2DPosition]:
-        (corners,ids,rejected) = self.__detect_markers(image)
+    def convert_to_Named2DPositions(self, image:np.ndarray, markers) -> List[Named2DPosition]:
+        (corners,ids,rejected) = markers
         valid_detections = list()
         
         if len(corners) > 0:
@@ -190,8 +211,8 @@ class ArucuDetector:
 
         return valid_detections
     
-    def draw_predictions(self, image:np.ndarray) -> np.ndarray:
-        (corners,ids,rejected) = self.__detect_markers(image)
+    def draw_predictions(self, image:np.ndarray, markers) -> np.ndarray:
+        (corners,ids,rejected) = markers
         frame_markers = aruco.drawDetectedMarkers(image.copy(), corners, ids)
         return frame_markers
     
@@ -203,10 +224,12 @@ class ObjectDetector:
     _label_map: Dict
     _mean: float
     _std: float
+    _confidence_limit:float
 
-    def __init__(self, model_path:str, label_map_path:str, std:float=127.5, mean:float=127.5) -> None:
+    def __init__(self, model_path:str, label_map_path:str, confidence_limit:float=0.8, std:float=127.5, mean:float=127.5) -> None:
         self._mean = mean
         self._std = std
+        self._confidence_limit = confidence_limit
         self._label_map = self.read_label_map(label_map_path)
         self._interpreter = tf.lite.Interpreter(model_path)
         self._interpreter.allocate_tensors()
@@ -214,9 +237,6 @@ class ObjectDetector:
         self._output_details = self._interpreter.get_output_details()
 
     def read_label_map(self, label_map_path):
-
-        item_id = None
-        item_name = None
         items = {}
 
         with open(label_map_path, "r") as file:
@@ -240,73 +260,62 @@ class ObjectDetector:
             image = (np.float32(image) - self._mean)/self._std
         return image
     
-    def _predict(self, image:np.ndarray) -> Dict[str,any]:
+    def predict(self, image:np.ndarray) -> Dict[str,any]:
         processedImg = self._preprocess_image(image)
         self._interpreter.set_tensor(self._input_details[0]['index'], processedImg)
         self._interpreter.invoke()
-        predictions = dict()
 
-        predictions["boxes"] = (self._interpreter.get_tensor(self._output_details[1]['index'])[0])
-        predictions["classes"] = (self._interpreter.get_tensor(self._output_details[3]['index'])[0])
-        predictions["confidence"] = (self._interpreter.get_tensor(self._output_details[0]['index'])[0])
+        boxes_filtered = list()
+        classes__filtered = list()
+        confidence_scores = (self._interpreter.get_tensor(self._output_details[0]['index'])[0])
+        boxes = (self._interpreter.get_tensor(self._output_details[1]['index'])[0])
+        classes = (self._interpreter.get_tensor(self._output_details[3]['index'])[0])
 
-        return predictions
+        for i,confidence in enumerate(confidence_scores):
+            if confidence > self._confidence_limit:
+                boxes_filtered.append(self._convert_box_coords_to_pixel_coords(boxes[i]))
+                classes__filtered.append(classes[i])
 
-    def preidict_bounds(self, image:np.ndarray, confidence_limit=0.75) -> List[BoundingBox]:
-        pred = self._predict(image)
-        valid_detections = list()
+        return (boxes_filtered,classes__filtered)
 
-        for i,conf in enumerate(pred["confidence"]):
-            if conf < confidence_limit:
-                break
+    
+    def _convert_box_coords_to_pixel_coords(self, box_coords):
+        image_shape = self._input_details[0]['shape'][1:3]
 
-            new_bb = BoundingBox()
-            vec_a = Vector2D()
-            vec_b = Vector2D()
+        x_1 =(image_shape[0]*box_coords[1])
+        y_1 =(image_shape[1]*box_coords[0])
+                                
+        x_2 =(image_shape[0]*box_coords[3])
+        y_2 =(image_shape[1]*box_coords[2])
 
-            vec_a.x = (image.shape[0]*pred["boxes"][i][1])
-            vec_a.y = (image.shape[1]*pred["boxes"][i][0])
+        return (x_1, x_2, y_1, y_2)
 
-            vec_b.x = (image.shape[0]*pred["boxes"][i][3])
-            vec_b.y = (image.shape[1]*pred["boxes"][i][2])
+    def convert_to_Named2DPositions(self, boxes) -> np.ndarray:
+        valid_detections = np.zeros(shape=(len(boxes),2))
 
-            new_bb.vec_a = vec_a
-            new_bb.vec_b = vec_b
-            new_bb.label_name = self._label_map[int(pred["classes"][i])+1]
-            valid_detections.append(new_bb)
-        
-        return valid_detections
+        for i,box in enumerate(boxes):
 
-    def predict_positions(self, image:np.ndarray, confidence_limit=0.7) -> List[Named2DPosition]:
-        pred = self._predict(image)
-        valid_detections = list()
-
-        for i,conf in enumerate(pred["confidence"]):
-            if conf < confidence_limit:
-                break
-
-            new_pos = Named2DPosition()
-            new_pos.x = int(image.shape[0]*pred["boxes"][i][1]) + (int(image.shape[0]*pred["boxes"][i][3]) - int(image.shape[0]*pred["boxes"][i][1]))/2
-            new_pos.y = int(image.shape[0]*pred["boxes"][i][0]) + (int(image.shape[0]*pred["boxes"][i][2]) - int(image.shape[0]*pred["boxes"][i][0]))/2
-            new_pos.name = self._label_map[int(pred["classes"][i])+1]
-            valid_detections.append(new_pos)
+            x = int(box[0]) + (int(box[1]) - int(box[0]))/2
+            y = int(box[2]) + (int(box[3]) - int(box[2]))/2
+            valid_detections[i] = (x,y)
 
         return valid_detections
 
-    def draw_predictions(self, image:np.ndarray, confidence_limit=0.7) ->np.ndarray:
-        boxes = self.preidict_bounds(image,confidence_limit)
-        for box in boxes:
-            pos1 = (int(box.vec_a.x), int(box.vec_a.y))
-            pos2 = (int(box.vec_b.x), int(box.vec_b.y))
+    def draw_predictions(self, image:np.ndarray, prediction) ->np.ndarray:
+        boxes, classes  = prediction
+        for index,box in enumerate(boxes):
+            pos1 = (int(box[0]), int(box[2]))
+            pos2 = (int(box[1]), int(box[3]))
             image = cv2.rectangle(image.copy(), pos1, pos2, (0,255,0), 1)  
             text_pos_x = pos1[0]
             text_pos_y = pos1[1] - 10
-            cv2.putText(image,box.label_name,(text_pos_x,text_pos_y),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,0),1,cv2.LINE_AA)
+            cv2.putText(image,self._label_map[int(classes[index])+1],(text_pos_x,text_pos_y),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,0),1,cv2.LINE_AA)
         return image
 
 class ObjectDetectorNode(Node):
     _bridge:CvBridge
     _object_detector:ObjectDetector
+    _object_tracker:CentroidTracker
     _last_update: int
     _debug_view: bool
 
@@ -316,6 +325,7 @@ class ObjectDetectorNode(Node):
         self._bridge = CvBridge()
         self._load_params()
         self._init_detector()
+        self._object_tracker = CentroidTracker()
         self._last_update = datetime.now().microsecond
         self._debug_view = self.get_parameter("debug_view").get_parameter_value().bool_value
         
@@ -356,7 +366,11 @@ class ObjectDetectorNode(Node):
 
         cv2Img = self._bridge.compressed_imgmsg_to_cv2(cmprs_img_msg=msg)
         img = np.asarray(cv2Img)
-        img = self._object_detector.draw_predictions(img)
+        results = self._object_detector.predict(img)
+        self._object_tracker.update(self._object_detector.convert_to_Named2DPositions(results[0]))
+        img = self._object_tracker.draw_tracked_objects(img)
+        # img = self._object_detector.draw_predictions(img,results)
+        
         img = cv2.resize(img,(1024,1024))
         cv2.imshow("processed_image",img) 
         cv2.waitKey(1)
