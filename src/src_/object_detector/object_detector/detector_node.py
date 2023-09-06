@@ -47,7 +47,7 @@ class CentroidTracker:
     # the next available identification number
     _next_id:np.uint8
 
-    def __init__(self, max_distance:float=20.0, undetected_max_cnt:int=30, heading_decay:float=1) -> None:
+    def __init__(self, max_distance:float=35.0, undetected_max_cnt:int=25, heading_decay:float=0.5) -> None:
         self._max_dist = max_distance
         self._undetected_max_cnt = undetected_max_cnt
         self._next_id = 0
@@ -59,7 +59,7 @@ class CentroidTracker:
     def update(self, detections:np.ndarray) -> None:
         detections = self._find_knowen_objects(detections)
         self._register_new_objects(detections)
-        # self._remove_lost_objects()
+        self._remove_lost_objects()
 
     # Tries to asociate the new detections with the knowen tracked objects.
     # All reidentified objects will be removed from the detections list
@@ -78,8 +78,7 @@ class CentroidTracker:
                 tracked_obj.pos.appendleft(tracked_obj.predicted_pos)
                 tracked_obj.undetected_cnt +=1
 
-            print("pred")
-            tracked_obj.predicted_pos = self._predict_next_pose(tracked_obj.pos)
+            tracked_obj.predicted_pos = self._predict_next_pose(tracked_obj.pos, undetected_cnt=tracked_obj.undetected_cnt)
         return detections
 
     # Returns the index of the detection that is closest to the given
@@ -122,7 +121,7 @@ class CentroidTracker:
             
     
     def _remove_lost_objects(self):
-        for key in self._tracked_objects.keys():
+        for key in list(self._tracked_objects.keys()):
             if self._tracked_objects[key].undetected_cnt > self._undetected_max_cnt:
                 del self._tracked_objects[key]
 
@@ -147,30 +146,35 @@ class CentroidTracker:
 
     def _predict_next_pose(self, positions:deque, heading_decay:float=0.5,undetected_cnt:int=0) -> np.ndarray:
         # calculate motion vectors from last 3 samples
-        vec_a = positions[1]-positions[2]
-        vec_b = positions[0]-positions[1]
-        if (vec_a[0] == 0 and vec_a[1] == 0) or (vec_b[0] == 0 and vec_b[1] == 0):
+        vec_a = positions[1] - positions[2]
+        vec_b = (positions[0] - positions[1]) 
+        if (vec_b[0] == 0 and vec_b[1] == 0) or (vec_a[0] == 0 and vec_a[1] == 0):
             return positions[0]
         # calculate angle between motion vectors
-        alpha = -1*self._calculate_angle_with_direction(vec_a,vec_b)
+        # alpha = -1*self._calculate_angle_with_direction(vec_a,vec_b)
         # add accelaration
-        accelaration = (vec_b-vec_a)*0.4
-        new_vec = vec_b 
+        new_vec = vec_b
         # apply decay if detections are missing
-        new_vec *= heading_decay**undetected_cnt
+        new_vec *= 0.85**undetected_cnt
         # rotate motion vector
-        new_pos = positions[0] + self._rotate_vector(new_vec,alpha)
+        # new_pos = positions[0] + self._rotate_vector(new_vec,alpha)
         # calculate next position
-        return new_pos
+        # return new_vec+positions[0]
+        return new_vec +positions[0]
     
     def draw_tracked_objects(self, image:np.ndarray) -> np.ndarray:
         for key,obj in self._tracked_objects.items():
-            cv2.circle(image,obj.pos[0].astype(int),3,(0,255,0),3)
-            cv2.circle(image,obj.predicted_pos.astype(int),3,(0,0,255),3)
-            cv2.circle(image,obj.pos[0].astype(int),int(self._max_dist),(255,0,0),1)
+            try:
+                cv2.circle(image,obj.pos[0].astype(int),2,(0,255,0),2)
+                cv2.circle(image,obj.predicted_pos.astype(int),2,(0,0,255),2)
+                vec =  obj.predicted_pos.astype(int) - obj.pos[0].astype(int)
+                cv2.arrowedLine(image, obj.pos[0].astype(int), obj.pos[0].astype(int) + vec*5,
+                                     (0,0,0), 1) 
+                cv2.circle(image,obj.pos[0].astype(int),int(self._max_dist),(255,0,0),1)
 
-            cv2.putText(image,str(obj.id),((int(obj.pos[0][0]),int(obj.pos[0][1]))),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,0),1,cv2.LINE_AA)
-            
+                cv2.putText(image,str(obj.id),((int(obj.pos[0][0]),int(obj.pos[0][1]))),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,0),1,cv2.LINE_AA)
+            except Exception as ex :
+                print("bad value!")
         return image
 
 
