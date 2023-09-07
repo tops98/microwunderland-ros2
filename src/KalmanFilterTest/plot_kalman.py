@@ -3,8 +3,8 @@ import numpy as np
 from matplotlib import pyplot
 
 
-true_initial_position = -20
-true_velocity = 1
+true_initial_position = 3
+true_velocity = 3
 true_accelaration = 0
 
 initial_state = np.array([
@@ -14,46 +14,81 @@ initial_state = np.array([
     ])
 
 measurment_uncertainty = np.array([
-    1 # std in measurment
+    3 # std in measurment
 ])
 
 processnoise = np.array([
-    0.,   # position noise
-    0.,   # velocity noise
-    0.25   # accelaration noise
+    0.1,   # position noise
+    0.1,   # velocity noise
+    0.1   # accelaration noise
 ])
 
 estimatation_uncertainty = np.array([
-    0.01, # error in initial position estimate
-    0.01, # error in initial velocity estimate
-    0.01  # error in initial accelaration estimate
+    0.001,  # error in initial position estimate
+    .025,   # error in initial velocity estimate
+    .05   # error in initial accelaration estimate
 ])
 
 time_step = 0.1
-update_rate = 5
-iterations = 100
+update_rate = 10
+iterations = 300
+
 ground_truth = [(true_initial_position +true_velocity*(x*time_step) + 0.5*(x*time_step)**2*true_accelaration)  for x in range(iterations)]
-estimates = np.zeros(iterations)
-variances = np.zeros(iterations)
+measurments = np.zeros(iterations)
+pos_estimates = np.zeros(iterations)
+vel_estimates = np.zeros(iterations)
+acc_estimates = np.zeros(iterations)
+variances = np.zeros((3,iterations))
 
 
 filter = CVD_KalmanFilter(dim_x=3, dim_z=1,initial_state=initial_state)
+filter._P = estimatation_uncertainty.dot(estimatation_uncertainty.transpose())
+filter._R = measurment_uncertainty.dot(measurment_uncertainty.transpose())
+filter._Q = processnoise.dot(processnoise.transpose())
+
 
 for i in range(iterations):
+    measurment = ground_truth[i]+ np.random.uniform(-1, 1)*measurment_uncertainty
     filter.predict(time_step)
-    if i % update_rate == 0:
-        filter.update(ground_truth[i]+ np.random.rand()*measurment_uncertainty)
+    if not (i >100 and i < 200):
+        if i % update_rate == 0:
+            filter.update(measurments=measurment)
 
-    estimates[i] = filter._H.dot(filter._X)
-    variances[i] = filter._P[0][0]
+    measurments[i] = measurment
+    pos_estimates[i] = filter._H.dot(filter._X)
+    variances[:,i] = filter._P.diagonal()
 
-pyplot.subplot(2,1,1)
-pyplot.plot(ground_truth,'o-k')
-pyplot.plot(estimates,'o-b')
-pyplot.plot([ground_truth+ var for var in variances] ,'--m')
+    vel_estimates[i] = filter._X[1]
+    acc_estimates[i] = filter._X[2]
+
+pyplot.subplot(3,1,1)
+pyplot.plot(ground_truth,'-k')
+pyplot.plot(measurments,'o-b',markersize=4)
+pyplot.plot(pos_estimates,'o-g',markersize=4)
+pyplot.plot([(ground_truth[i] + 2*np.sqrt(abs(variances[0][i])) ,ground_truth[i] - 2*np.sqrt(abs(variances[0][i]))) for i in range(iterations)] ,'--m')
+
 pyplot.title("Position")
 pyplot.xlabel("time in ms")
 pyplot.ylabel("range in meters")
+pyplot.legend(["true val", "measurment", "estimate", "variance"],loc='center left', bbox_to_anchor=(1, 0.5))
 
+pyplot.subplot(3,1,2)
+pyplot.axhline(y = true_velocity, color = 'k', linestyle = '-')
+pyplot.plot(vel_estimates,"o-r",markersize=4)
+pyplot.plot([(true_velocity + 2*np.sqrt(abs(variances[1][i])) ,true_velocity - 2*np.sqrt(abs(variances[1][i]))) for i in range(iterations)] ,'--m')
+pyplot.title("Velocity")
+pyplot.xlabel("time in ms")
+pyplot.ylabel("m/s")
+pyplot.legend(["true velocity", "estimate", "variance"],loc='center left', bbox_to_anchor=(1, 0.5))
 
+pyplot.subplot(3,1,3)
+pyplot.axhline(y = true_accelaration, color = 'k', linestyle = '-')
+pyplot.plot(acc_estimates,"o-r",markersize=4)
+pyplot.plot([(true_accelaration + 2*np.sqrt(abs(variances[2][i])) ,true_accelaration - 2*np.sqrt(abs(variances[2][i]))) for i in range(iterations)] ,'--m')
+pyplot.title("Accelaration")
+pyplot.xlabel("time in ms")
+pyplot.ylabel("m/s")
+pyplot.legend(["true accelaration", "estimate", "variance"],loc='center left', bbox_to_anchor=(1, 0.5))
+
+pyplot.tight_layout(h_pad=0.5)
 pyplot.show()
