@@ -8,8 +8,8 @@ true_velocity = 3
 true_accelaration = 0
 
 initial_state = np.array([
-    0.,  # position
-    -3., # velocity
+    -3.,  # position
+    0., # velocity
     2.   # accelaration
     ])
 
@@ -18,13 +18,13 @@ measurment_uncertainty = np.array([
 ])
 
 processnoise = np.array([
-    0.09,   # position noise
-    0.045,   # velocity noise
-    0.045   # accelaration noise
+    0.1,   # position noise
+    0.1,   # velocity noise
+    0.1   # accelaration noise
 ])
 
 estimatation_uncertainty = np.array([
-    10,  # error in initial position estimate
+    1,  # error in initial position estimate
     5,   # error in initial velocity estimate
     10   # error in initial accelaration estimate
 ])
@@ -43,16 +43,16 @@ uncertainty = np.zeros(iterations)
 variances = np.zeros((3,iterations))
 error = 0
 
-
-
 for j in range(repetitions):
+    measurments = list()
+
     filter = CVD_KalmanFilter(dim_x=3, dim_z=1,initial_state=initial_state)
     filter._P = estimatation_uncertainty.dot(estimatation_uncertainty.transpose())
     filter._R = measurment_uncertainty.dot(measurment_uncertainty.transpose())
     filter._Q = processnoise.dot(processnoise.transpose())
     for i in range(iterations):
         filter.predict(time_step)
-        if not (i >200 and i < 400):
+        if not (i >300 and i < 500):
             if i % update_rate == 0:
                 measurment = ground_truth[i]+ np.random.randn()*measurment_uncertainty
                 filter.update(measurments=measurment)
@@ -100,5 +100,5 @@ pyplot.plot(uncertainty,'-r')
 pyplot.title("Uncertainty in System")
 
 pyplot.tight_layout(h_pad=0.25)
-print(error/(iterations*repetitions))
+print(f"Error: {error/(iterations*repetitions)}\nX= {filter._X}")
 pyplot.show()

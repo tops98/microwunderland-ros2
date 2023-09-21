@@ -14,9 +14,8 @@ set(msg_files
   "msg/StringUint16Pair.msg"
   "msg/ListNamed2DPositions.msg"
   "msg/Named2DPosition.msg"
-  "msg/BoundingBox.msg"
-  "msg/LabeledImage.msg"
   "msg/Vector2D.msg"
+  "msg/BoundingBoxArray"
 )
 
 set(srv_files

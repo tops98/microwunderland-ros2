@@ -19,7 +19,9 @@ class CVD_KalmanFilter:
         # uncertainty in model aka. process noise
         self._Q = np.eye(dim_x)
         # observation matrix
-        self._H = np.ones((dim_z, dim_x))
+        self._H = np.zeros((dim_z,dim_x))
+        for i in range(dim_z):
+            self._H[i,i] = 1
 
     def predict(self, dt:float) -> None:
         # create state transition matrix
@@ -57,4 +59,3 @@ class CVD_KalmanFilter:
         I = np.eye(self._X.size)
         IKH = I-KH
         self._P = IKH.dot(self._P).dot(IKH.transpose()) + K_R_Kt
-
