@@ -7,7 +7,7 @@ class TestObjectDetector(unittest.TestCase):
 
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
-        self._data_path = "/home/tobias/ros_docker/microwunderland-ros2/src/src_/object_detector/data/"
+        self._data_path = "/home/ros2_workspace/src_/object_detector/data/"
         model_name = "SSD_MobileNet_V2_FPNLite_320x320.tf"
         label_map_name = "label_map.pbtxt"
 
@@ -62,11 +62,11 @@ class TestObjectDetector(unittest.TestCase):
         
     # Test prediction
     def test_predictions(self):
-        expected = np.array([[0.0,130.51335334777832, 179.4292449951172, 49.66021537780762, 85.9719467163086],
-        [0.0, 273.2653617858887, 304.1395378112793, 195.21209716796875, 228.79135131835938],
-        [0.0, 272.09957122802734, 303.6751937866211, 215.5615234375, 247.70103454589844],
-        [0.0, 279.60567474365234, 313.10096740722656, 32.25118160247803, 57.58814334869385],
-        [0.0, 271.09508514404297, 296.70082092285156, 174.81225967407227, 208.0788230895996]])
+        expected = np.array([[0.0,130.51335334777832, 49.66021537780762, 179.4292449951172, 85.9719467163086],
+        [0.0, 273.2653617858887, 195.21209716796875, 304.1395378112793, 228.79135131835938],
+        [0.0, 272.09957122802734, 215.5615234375, 303.6751937866211, 247.70103454589844],
+        [0.0, 279.60567474365234, 32.25118160247803, 313.10096740722656, 57.58814334869385],
+        [0.0, 271.09508514404297, 174.81225967407227, 296.70082092285156, 208.0788230895996]])
         image = cv2.imread(self._data_path+"test_image.jpg")
         detector = ObjectDetector( self._model_path, self._label_map_path)
         predictions = detector.predict(image)
