@@ -2,18 +2,18 @@ import numpy as np
 from dataclasses import dataclass
 from typing import List
 from kalman_filter import CVD_KalmanFilter, CVD_KF_Config
-from datetime import datetime
+from datetime import datetime,timedelta
 
 
 class Centroid:
-    _id: str
+    _id: int
     _filter: CVD_KalmanFilter 
     _num_observed_elements:int
     _last_update:datetime
     num_updates:int
 
 
-    def __init__(self, id:str, filter:CVD_KalmanFilter) -> None:
+    def __init__(self, id:int, filter:CVD_KalmanFilter) -> None:
         self._id = id
         self._filter = filter
         self._num_observed_elements = filter._R.shape[0]
@@ -42,6 +42,10 @@ class Centroid:
     @property
     def last_update(self) -> datetime:
         return self._last_update
+    
+    @property
+    def id(self) -> int:
+        return self._id
 
 
 class CentroidTracker:
@@ -68,13 +72,14 @@ class CentroidTracker:
     
     def _find_matching_centroid(self, positons:np.ndarray) -> np.ndarray:
         for centroid in self._centroids:
-            min_dist = float("inf")
+            min_dist = self._delta_max
             index = -1
             for id,pos in enumerate(positons):
                 current_dist = np.linalg.norm(centroid.position-pos)
                 if current_dist < min_dist:
                     min_dist = current_dist
                     index = id
+
             if index != -1:
                 centroid.update(positons[index])
                 positons = np.delete(positons,index)
@@ -85,13 +90,16 @@ class CentroidTracker:
             initial_state = np.zeros(pos.size*3)
             initial_state[0:pos.size] = pos
             filter = CVD_KalmanFilter(self._filter_config,initial_state)
-            self._centroids.append( Centroid(f"ID_{self._id_count}",filter))
+            self._centroids.append( Centroid(self._id_count, filter))
+            self._id_count +=1
 
     def _remove_lost_objects(self) -> None:
-        for index in range(len(self._centroids)):
-            delta_time = (datetime.now() - self._centroids[index]._last_update).microseconds
-            if delta_time > self._max_update_pause_ms:
-                self._centroids.remove(self._centroids[index])
+        filtered = list()
+        for centroid in self._centroids:
+            delta_time = datetime.now() - centroid.last_update
+            if delta_time < timedelta(milliseconds=self._max_update_pause_ms):
+                filtered.append(centroid)
+        self._centroids = filtered
 
     @property
     def get_state(self) ->List[Centroid]:
