@@ -13,27 +13,53 @@ class CVD_KF_Config:
     
     def __init__(self,
         num_measurements:int,
-        num_states:int,
         initial_uncertenty:np.ndarray,
         measurment_uncertenty:np.ndarray,
         process_noise:np.ndarray,
         observation_matrix:np.ndarray = None) -> None:
 
-        if measurment_uncertenty.shape != num_measurements:
+        if measurment_uncertenty.size != num_measurements:
             raise ValueError("dimensions are not matching")
-        if initial_uncertenty.shape != num_states:
+        if initial_uncertenty.size != num_measurements*3:
             raise ValueError("dimensions are not matching")
-        if process_noise != num_states:
+        if process_noise.size != num_measurements*3:
             raise ValueError("dimensions are not matching")
         
-        self._R = measurment_uncertenty.dot(measurment_uncertenty)
-        self._P = initial_uncertenty.dot(initial_uncertenty)
-        self._Q = process_noise.dot(process_noise)
+        r_matrix = np.zeros((num_measurements, num_measurements,))
+        for i,value in enumerate(measurment_uncertenty):
+            r_matrix[i,i]=value**2
+
+        self._R = r_matrix
+        self._P = self._create_covarianz_matrix(initial_uncertenty)
+        self._Q = self._create_covarianz_matrix(process_noise)
 
         if observation_matrix is None:
-            self._H = np.zeros((num_measurements,num_states))
-            for i in range(num_measurements):
-                self._H[i,i] = 1
+            self._H = self._create_observation_matrix(num_measurements,num_measurements*3)
+        else:
+            self._H = observation_matrix
+
+
+    def _create_observation_matrix(self, num_measurements:int, num_states:int) -> np.ndarray:
+        matrix = np.zeros((num_measurements,num_states))
+        for i in range(num_measurements):
+            matrix[i,i] = 1
+        return matrix
+
+    def _create_covarianz_matrix(self, array:np.ndarray) -> np.ndarray:
+
+        offset = array.size // 3
+        cov_matrix = np.zeros((array.size,array.size))
+        for y in range(array.size):
+            velocity_colum = (y+offset) % array.size
+            accelaration_colum = (y+2*offset) % array.size
+            
+            cov_matrix[y,y] = array[y]**2
+            cov_matrix[y,velocity_colum] = array[y]*array[velocity_colum] 
+            cov_matrix[y,accelaration_colum] = array[y]*array[accelaration_colum]
+        
+        return cov_matrix
+        
+
     @property
     def R(self) -> np.ndarray:
         return self._R
@@ -58,7 +84,6 @@ class CVD_KF_Config:
 
 # Kalman Filter for constant velocity dynamics
 class CVD_KalmanFilter:
-
     
     def __init__(self, config:CVD_KF_Config, initial_state:np.ndarray=None) -> None:
         if initial_state is not None:
@@ -98,9 +123,9 @@ class CVD_KalmanFilter:
 
     def update(self, measurments:np.ndarray) -> None:
         # calculate Kalman Gain
-        p = self._P.dot(self._H.transpose())
+        ph_t = self._P.dot(self._H.transpose())
         pr = np.linalg.inv(self._H.dot(self._P).dot(self._H.transpose())+self._R)
-        self._K = p.dot(pr)
+        self._K = ph_t.dot(pr)
 
         # update state estimate
         HX = self._H.dot(self._X)
