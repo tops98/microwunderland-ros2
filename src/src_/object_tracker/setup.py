@@ -1,11 +1,12 @@
 from setuptools import setup
+from setuptools import find_packages
 
 package_name = 'object_tracker'
 
 setup(
     name=package_name,
     version='0.0.0',
-    packages=[package_name],
+    packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -20,7 +21,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'object_tracker_node = object_tracker.object_tracker_node:main'
+            'object_tracker = object_tracker.ros_node:main'
         ],
     },
 )

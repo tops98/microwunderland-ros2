@@ -1,5 +1,5 @@
 import unittest
-from kalman_filter import CVD_KalmanFilter, CVD_KF_Config
+from submodules.kalman_filter import CVD_KalmanFilter, CVD_KF_Config
 import numpy as np
 
 

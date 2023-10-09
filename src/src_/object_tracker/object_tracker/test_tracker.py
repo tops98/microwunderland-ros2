@@ -1,6 +1,6 @@
 import unittest
-from kalman_filter import CVD_KalmanFilter, CVD_KF_Config
-from centroid_tracker import CentroidTracker, Centroid
+from submodules.kalman_filter import CVD_KalmanFilter, CVD_KF_Config
+from submodules.centroid_tracker import CentroidTracker, Centroid
 import numpy as np
 from pprint import pprint
 from datetime import datetime,timedelta

@@ -18,12 +18,12 @@ class CVD_KF_Config:
         process_noise:np.ndarray,
         observation_matrix:np.ndarray = None) -> None:
 
-        if measurment_uncertenty.size != num_measurements:
-            raise ValueError("dimensions are not matching")
-        if initial_uncertenty.size != num_measurements*3:
-            raise ValueError("dimensions are not matching")
-        if process_noise.size != num_measurements*3:
-            raise ValueError("dimensions are not matching")
+        if len(measurment_uncertenty) != num_measurements:
+            raise ValueError(f"dimensions are not matching measurment_uncertenty ({len(measurment_uncertenty)}) != {num_measurements}")
+        if len(initial_uncertenty) != num_measurements*3:
+            raise ValueError(f"dimensions are not matching initial_uncertenty ({len(initial_uncertenty)}) != {num_measurements*3}")
+        if len(process_noise) != num_measurements*3:
+            raise ValueError(f"dimensions are not matching process_noise ({len(initial_uncertenty)}) != {num_measurements*3}")
         
         r_matrix = np.zeros((num_measurements, num_measurements,))
         for i,value in enumerate(measurment_uncertenty):
@@ -56,7 +56,7 @@ class CVD_KF_Config:
             cov_matrix[y,y] = array[y]**2
             cov_matrix[y,velocity_colum] = array[y]*array[velocity_colum] 
             cov_matrix[y,accelaration_colum] = array[y]*array[accelaration_colum]
-        
+
         return cov_matrix
         
 
@@ -87,7 +87,7 @@ class CVD_KalmanFilter:
     
     def __init__(self, config:CVD_KF_Config, initial_state:np.ndarray=None) -> None:
         if initial_state is not None:
-            if initial_state.size % 3 != 0:
+            if initial_state.size % 3 != 0 or initial_state.size >= config.num_state*3:
                 raise ValueError("invalid number of variables:\n State vector expects position, velocity and accelaration for every axis")
             self._X = initial_state
         else:
