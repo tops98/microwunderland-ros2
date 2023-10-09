@@ -1,5 +1,7 @@
 from setuptools import setup
 from setuptools import find_packages
+import os
+from glob import glob
 
 package_name = 'object_detector'
 
@@ -11,6 +13,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join("share",package_name,"data"), glob("data/*")),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -21,7 +24,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'obj_detector = object_detector.detector_node:main',
+            'object_detector = object_detector.ros_node:main',
         ],
     },
 )

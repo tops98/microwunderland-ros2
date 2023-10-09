@@ -4,11 +4,12 @@ import cv2
 import numpy as np
 import rclpy
 from cv_bridge import CvBridge
-from microwunderland_interfaces.msg import BoundingBoxArray
-from object_detector import ObjectDetector
+from microwunderland_interfaces.msg import BoundingBoxList,BoundingBox
+from object_detector.submodules.object_detector import ObjectDetector
 from rclpy.node import Node
 from rclpy.qos import HistoryPolicy
 from sensor_msgs.msg import CompressedImage
+from pprint import pprint
 
 
 class ObjectDetectorNode(Node):
@@ -30,7 +31,7 @@ class ObjectDetectorNode(Node):
         )
 
         self._publisher = self.create_publisher(
-            BoundingBoxArray,
+            BoundingBoxList,
             self.get_parameter("output_topic").get_parameter_value().string_value,
             HistoryPolicy.KEEP_LAST
         )        
@@ -46,11 +47,16 @@ class ObjectDetectorNode(Node):
 
 
     def _load_params(self) -> None:
+        # automaticly find path to working directory relative to script location
+        ws_path = '/'.join(str(__file__).split('/')[0:-2])
+
         self.declare_parameter("output_topic","predictions_cam_left")
         self.declare_parameter("image_topic","cam_left/compressed")
-        self.declare_parameter("model_path","/home/tobias/ros_docker/microwunderland-ros2/src/src_/object_detector/data/model.tf")
-        self.declare_parameter("label_map_path","/home/tobias/ros_docker/microwunderland-ros2/src/src_/object_detector/data/label_map.pbtxt")
-        self.declare_parameter("confidence_limit",0.8)
+
+        self.declare_parameter("model_path",ws_path+"/data/SSD_MobileNet_V2_FPNLite_320x320.tf")
+        self.declare_parameter("label_map_path",ws_path+"/data/label_map.pbtxt")
+
+        self.declare_parameter("confidence_limit",0.75)
         self.declare_parameter("mean",127.5)
         self.declare_parameter("std",127.5)
 
@@ -63,19 +69,22 @@ class ObjectDetectorNode(Node):
         msg = self._convert_to_ros_msg(predictions)
 
         self._publisher.publish(msg)
-
         
-    def _convert_to_ros_msg(self, predictions:List[Tuple[float,List[float]]]) -> np.ndarray:
+    def _convert_to_ros_msg(self, predictions:List[Tuple[float,List[float]]]) -> BoundingBoxList:
 
-        bb_array = BoundingBoxArray()
-        for index,prediction in enumerate(predictions):
-            bb_array.pos_y1[index] = predictions[1][0]
-            bb_array.pos_x1[index] = predictions[1][1]
+        bb_array = BoundingBoxList()
+        for prediction in predictions:
 
-            bb_array.pos_y2[index] = predictions[1][2]
-            bb_array.pos_x2[index] = predictions[1][3]
-            bb_array.classes[index] = prediction[0]
-        
+            print(prediction)
+            print(prediction[1][0])
+            bb = BoundingBox()
+            bb.pos1.x = float(prediction[1][0]) # y1
+            bb.pos1.y = float(prediction[1][1]) # x1
+
+            bb.pos2.x = float(prediction[1][2]) # y2
+            bb.pos2.y = float(prediction[1][3]) # x2
+            bb.label = "ID_"+str(prediction[0])
+            bb_array.boxes.append(bb)
 
         return bb_array
     
@@ -93,3 +102,6 @@ def main(args=None):
     cv2.destroyAllWindows()
     detector_node.destroy_node()
     rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()

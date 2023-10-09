@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import re
-from dataclasses import dataclass
 
 import tensorflow as tf
 from typing import Dict,Tuple
@@ -25,7 +24,7 @@ class ObjectDetector:
         self._input_details = self._interpreter.get_input_details()
         self._output_details = self._interpreter.get_output_details()
 
-    def _read_label_map(self, label_map_path):
+    def _read_label_map(self, label_map_path) -> Dict[int,str]:
         items = {}
 
         with open(label_map_path, "r") as file:
