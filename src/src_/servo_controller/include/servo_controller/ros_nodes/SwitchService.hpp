@@ -49,5 +49,6 @@ class SwitchService: public rclcpp::Node{
         void getAvailableStatesCallback(const GetAvailableStatesService::Request::SharedPtr request, GetAvailableStatesService::Response::SharedPtr response);
         void getCurrentStateCallback(const GetCurrentStateService::Request::SharedPtr request, GetCurrentStateService::Response::SharedPtr response);
         void setStateCallback(const SetStateService::Request::SharedPtr request, SetStateService::Response::SharedPtr response);
+        void printState();
 };
 #endif

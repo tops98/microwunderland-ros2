@@ -5,7 +5,7 @@
 #include <servo_controller/pi_hardware_adapter/base_pi_i2c_adapter.hpp>
 
 
-#define BASE_PI_ADAPTER
+#define WIRING_PI_ADAPTER
 
 #ifdef BASE_PI_ADAPTER
     #define GET_HARDWARE_ADAPTER BasePiHardwareAdapter::getInstance()
@@ -17,7 +17,7 @@
     #include <servo_controller/pi_hardware_adapter/WiringPiI2C.hpp>
 
     #define GET_HARDWARE_ADAPTER WiringPiAdapter::getInstance()
-    #define GET_I2C_ADAPTER WiringPiI2C::getInstance()
+    #define GET_I2C_ADAPTER   WiringPiI2CAdapter::getInstance()
 #endif
 
 #endif

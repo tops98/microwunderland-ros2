@@ -87,7 +87,7 @@ class Pca9586PwmController: public AbstractPwmController{
          * @throw invalid_argument if start or stop time is greater than 
          * period lentgh
          */
-        void setPulseWidth( uint8_t pin, uint16_t startTime, uint16_t stopTime);
+        void setPulse( uint8_t pin, uint16_t startTime, uint16_t stopTime);
 
     private:
         /**

@@ -35,7 +35,7 @@ DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
          * Initialize the hardware interfaces
          * @return 0 if sucess non zerro digit if error
         */
-        virtual int setup() { return 0;};
+        virtual void setup() { };
         // Base functions
         
         /**
@@ -50,7 +50,7 @@ DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
          * @param pin pin number
          * @param pud mode
         */
-        virtual void gpio_pullUpDnControl (int pin, int pud) { };
+        virtual void gpio_pullUpDownControl (int pin, int pud) { };
         virtual void gpio_digitalWrite (int pin, int value) { };
         virtual void gpio_pwmWrite (int pin, int value) { };
         virtual int gpio_digitalRead (int pin) { return 0;};
@@ -70,7 +70,7 @@ DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
 // enable warnings again
 DISABLE_WARNING_POP  
 
-    private:
+    protected:
         BasePiHardwareAdapter(){};
 };      
 #endif

@@ -1,4 +1,3 @@
-#ifdef WIRING_PI_ADAPTER
 #include <servo_controller/pi_hardware_adapter/WiringPiI2C.hpp>
 
 
@@ -10,4 +9,3 @@ WiringPiI2CAdapter* WiringPiI2CAdapter::getInstance(){
     }
     return instance_;
 }
-#endif

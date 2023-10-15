@@ -1,5 +1,3 @@
-#ifdef WIRING_PI_ADAPTER
-
 #ifndef WIRINGPIADAPTER_HPP
 #define WIRINGPIADAPTER_HPP
 
@@ -11,11 +9,11 @@ class WiringPiAdapter: public BasePiHardwareAdapter{
 
 
     private:
-        static WiringPiAdapter instance_ = nullptr;
+        static WiringPiAdapter* instance_;
     public:
-        static getInstance();
+        static  WiringPiAdapter* getInstance();
 
-        int gpio_setup (void) override{ 
+        void setup (void) override{ 
             if (wiringPiSetup () == -1){
                 throw "setting up wiringPi failed!";
             }
@@ -25,8 +23,8 @@ class WiringPiAdapter: public BasePiHardwareAdapter{
         void gpio_pinMode (int pin, int mode) override{ 
             pinMode(pin, mode);
         };
-        void gpio_pullUpDnControl (int pin, int pud) override{ 
-            pullUpDnContro(pin,pud)
+        void gpio_pullUpDownControl(int pin, int pud) override{ 
+            pullUpDnControl(pin,pud);
         };
         void gpio_digitalWrite (int pin, int value) override{ 
             digitalWrite(pin, value);
@@ -48,7 +46,7 @@ class WiringPiAdapter: public BasePiHardwareAdapter{
             digitalWriteByte(value);
         };
         void gpio_pwmSetMode (int mode) override{ 
-            pwmSetMode(mode)
+            pwmSetMode(mode);
         };
         void gpio_pwmSetRange (unsigned int range) override{ 
             pwmSetRange(range);
@@ -63,7 +61,6 @@ class WiringPiAdapter: public BasePiHardwareAdapter{
         void gpio_delayMicroseconds (unsigned int howLong) override{ delayMicroseconds(howLong);};
 
         private:
-            WiringPiAdapter(){ };
+            WiringPiAdapter(){};
 };
-#endif
 #endif
