@@ -40,8 +40,6 @@ Node("Switch_Service"){
     );
 
     RCLCPP_INFO(this->get_logger(), "SwitchService ready");
-    printState();
-
 }
 
 void SwitchService::printState(){
@@ -95,7 +93,7 @@ void SwitchService::setStateCallback(const SetStateService::Request::SharedPtr r
  SetStateService::Response::SharedPtr response){
 
     string switchName = request->switch_name;
-    RCLCPP_INFO_STREAM(this->get_logger(), "Setting state for switch: " << switchName);
+    RCLCPP_INFO_STREAM(this->get_logger(), "Setting state to "<<switchName<<" for switch: " << switchName);
     if( switches_.find(switchName) == switches_.end()){
         response->status = 1;
         return;

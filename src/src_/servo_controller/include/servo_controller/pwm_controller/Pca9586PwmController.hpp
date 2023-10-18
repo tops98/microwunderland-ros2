@@ -7,15 +7,19 @@
 #include <servo_controller/pi_hardware_adapter/hardware_adapter.hpp>
 #include <servo_controller/pwm_controller/AbstractPwmController.hpp>
 #include <servo_controller/utils/DisableWaring.h>
+#include "servo_controller/pwm_controller/PCA9586_Registers.hpp"
 // external package
 
 #define PCA_OSCILATOR_FREQ 25000000
 #define PCA_PWM_RESOLUTION 4096
 #define STARTUP_DELAY 500
 #define SLEEP_MODE_ENABLE_BIT_POS 0x4
+#define RESTART_MODE_BIT_POS 0x7
+#define LED_ALL_CALL_ENABLE_BIT_POS 0x1
 #define PWM_FULL_OFF_POS 0x4
-#define PWM_ON_HIGH_REG_COUNT_MASK 0xf0
-#define PWM_OFF_HIGH_REG_MASK 0xe0
+#define AUTO_INCREMENT_BIT_POS 0x4
+#define PWM_ON_REG_COUNT_MASK 0xf000
+#define PWM_OFF_REG_MASK 0xe000
 #define DEFAULT_DUTY_CYLCLE_OFFSET 408 // 10% offset
 
 using namespace std;
@@ -90,6 +94,7 @@ class Pca9586PwmController: public AbstractPwmController{
         void setPulse( uint8_t pin, uint16_t startTime, uint16_t stopTime);
 
     private:
+
         /**
          * Sets the value of the prescaler register
          * @param prescalerVal value of the prescaler register
@@ -132,7 +137,15 @@ DISABLE_WARNING_POP
          * @param address address of the reigster
          * @param value value of the register
         */
-        void setReg8(uint8_t address, uint8_t value, uint8_t mask=0xff);
+        void setReg16(uint16_t address, uint16_t value, uint16_t mask=0x0000);
+
+        /**
+         * Returns the a structure holding all relevant register for a given pwm channel
+         * @param uint8_t channel must be inbetween 0 and 15
+         * @return PwmOutput_t
+         * @throw invalid_argument error if channel does not exist
+        */
+        PwmOutput_t getPwmChannelRegisters(uint8_t channel);
         
 };
 #endif
