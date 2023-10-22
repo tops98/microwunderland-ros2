@@ -73,14 +73,21 @@ class TestTracker(unittest.TestCase):
             [95.999],
             [200],
         ])
+        
         tracker._register(initial_positions)
         tracker._find_matching_centroid(new_positions)
+        
         centroids = tracker._centroids
-
+        
         self.assertAlmostEqual(centroids[0].position[0],new_positions[0][0])
         self.assertAlmostEqual(centroids[1].position[0],initial_positions[1][0])
         self.assertAlmostEqual(centroids[2].position[0],new_positions[2][0])
         self.assertAlmostEqual(centroids[3].position[0],new_positions[3][0])
+
+        self.assertTrue(not centroids[0].unmatched)
+        self.assertTrue(    centroids[1].unmatched)
+        self.assertTrue(not centroids[2].unmatched)
+        self.assertTrue(not centroids[3].unmatched)
 
 
     def _get_default_filter_config(self) -> CVD_KF_Config:
