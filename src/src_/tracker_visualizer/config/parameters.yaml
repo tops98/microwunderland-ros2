@@ -1,14 +1,19 @@
 tracker_node:
   ros__parameters:
-    sample_rate: 15.0
+    sample_rate: 10.0
     delta_max: 20.0
+    num_probation_updates: 10
     max_update_pause: 6000.0 
-    estimatation_uncertainty: [100.,100.,100.,100.,100.,100.]
-    measurment_uncertainty: [0.25,0.25]
-    processnoise: [.9, .9, 0.6, 0.6, 0.1, 0.1]
+    estimatation_uncertainty: [100.,100.,100.,100.,0.01,0.01]
+    measurment_uncertainty: [2.,2.]
+    processnoise: [.5, .5, 0.6, 0.6, 0.05, 0.05]
 
 visualizer_node:
   ros__parameters:
     delta_max: 20.0
     publish_visualization: false
     draw_visualization: true
+
+object_detector_node:
+  ros__parameters:
+    confidence_limit: 0.8
