@@ -1,0 +1,5 @@
+# service that returns a UInt32 for a given key and an 8bit status code
+string key      # key
+---
+uint32 value    # return value
+uint8 status    # status code

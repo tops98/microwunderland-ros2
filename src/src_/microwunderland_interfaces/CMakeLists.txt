@@ -26,6 +26,13 @@ set(srv_files
   "srv/GetAvailableStates.srv"
   "srv/GetCurrentState.srv"
   "srv/SetState.srv"
+  "srv/SetStringKeyValue.srv"
+  "srv/SetString.srv"
+  "srv/AssigneTravelPlan.srv"
+  "srv/StringArray.srv"
+  "srv/GetUInt32.srv"
+  "srv/SetUint32KeyValue.srv"
+  "srv/GetFloat32.srv"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
