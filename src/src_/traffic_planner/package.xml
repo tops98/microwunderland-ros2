@@ -9,6 +9,9 @@
 
   <build_depend>microwunderland_interfaces</build_depend>
 
+  <exec_depend>numpy</exec_depend>
+  <exec_depend>schema</exec_depend>
+
   <exec_depend>rclpy</exec_depend>
   <exec_depend>std_srvs</exec_depend>
   <exec_depend>microwunderland_interfaces</exec_depend>
