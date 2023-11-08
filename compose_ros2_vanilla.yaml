@@ -1,16 +1,17 @@
-version: '3.8'
+# version: '3.8'
 services:
   ros_tcp_endpoint:
     container_name: ros_tcp_endpoint
     build: ./Dockerfile_ros_vanilla
-    network_mode: host
+    ports:
+      - 10000:10000
     volumes:
       - ./src:/home/ros2_workspace
       - /dev/shm:/dev/shm
     command: >
       /bin/bash -c
       "source /home/ros2_workspace/install/setup.bash &&
-      ros2 run ros_tcp_endpoint default_server_endpoint --ros-args -p ROS_IP:=localhost"
+      ros2 run ros_tcp_endpoint default_server_endpoint --ros-args -p ROS_IP:=0.0.0.0"
   
   foxglove_bridge:
     container_name: foxglove_bridge
