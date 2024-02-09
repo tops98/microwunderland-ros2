@@ -33,6 +33,7 @@ set(srv_files
   "srv/GetUInt32.srv"
   "srv/SetUint32KeyValue.srv"
   "srv/GetFloat32.srv"
+  "srv/GetStringArray.srv"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}

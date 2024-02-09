@@ -2,6 +2,6 @@
 
 string plan_name    # name of the travel plan
 uint8 tracker_id      # tracking id of the vehicle
-string ipadress     # ip address of the tinycar
+string ip_address     # ip address of the tinycar
 ---
 int8 status  # 0=travel plan assigned; 1=not assigned, vehicle not found; 2=not assigned, plan not found
