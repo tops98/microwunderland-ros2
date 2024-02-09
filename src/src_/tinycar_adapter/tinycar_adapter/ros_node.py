@@ -1,11 +1,11 @@
 import rclpy
 from rclpy.node import Node
 from typing import Dict
-from submodules.tinycarClient import TinycarClient, HeadlightStates, TaillightStates, BlinkerStates
-from microwunderland_interfaces.srv import GetFloat32, SetUint32KeyValue
+from submodules.tinycarUdpClient import TinycarUdpClient, HeadlightStates, TaillightStates, BlinkerStates
+from microwunderland_interfaces.srv import GetFloat32, SetUint32KeyValue, GetStringArray
 
 
-class TinyCarAdapter(Node):
+class TinycarAdapter(Node):
     _tinycar_clients: Dict[str,TinycarClient]
 
 
@@ -18,6 +18,7 @@ class TinyCarAdapter(Node):
         # create services
         self.create_service(GetFloat32,"get_battery_status", self._get_battery_status_cb)
 
+        self.create_service(GetStringArray,"get_available_cars",self._get_available_cars_cb)
         self.create_service(SetUint32KeyValue,"set_speed",self._set_speed_cb)
         self.create_service(SetUint32KeyValue,"set_head_light",self._set_head_light_cb)
         self.create_service(SetUint32KeyValue,"set_tail_light",self._set_tail_light_cb)
@@ -44,6 +45,9 @@ class TinyCarAdapter(Node):
         
         return tiny_car_clients
 
+    def _get_available_cars_cb(self, request, response):
+        response.value = self._tinycar_clients.keys()
+        return response
 
     def _get_battery_status_cb(self, request, response):
         car_name = request.key
@@ -128,7 +132,7 @@ class TinyCarAdapter(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    minimal_service = TinyCarAdapter()
+    minimal_service = TinycarAdapter()
 
     rclpy.spin(minimal_service)
 
