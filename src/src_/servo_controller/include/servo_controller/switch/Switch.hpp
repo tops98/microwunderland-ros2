@@ -25,13 +25,16 @@ class Switch{
         std::unordered_map<std::string,std::uint16_t> states_;
         std::string currentState_;
         std::string initialState_;
+        std::string name_;
         
     // methods:
     public:
         Switch(
             std::shared_ptr<Servomotor> servo,
             std::unordered_map<std::string,std::uint16_t> states,
-            std::string initialState);
+            std::string initialState,
+            std::string name
+            );
         
         Switch(std::shared_ptr<Servomotor> servo, SwitchConfig_t config);
 
@@ -60,6 +63,18 @@ class Switch{
          * @return string
         */
         std::string getCurrentState();
+
+        /**
+         * Returns the name of the switch
+         * @return string
+        */
+        std::string getName();
+
+        /**
+         * Returns the configuration of the switch as a string
+         * @return string
+        */
+        std::string toString();
 
     private:
         /**

@@ -2,6 +2,7 @@
 // std
 #include <stdexcept>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -9,17 +10,19 @@ using namespace std;
 Switch::Switch(
 shared_ptr<Servomotor> servo,
 unordered_map<string,uint16_t> states,
-string initialState){
+string initialState,
+std::string name){
     
     checkParams(states, initialState, servo);
     servo_ =  servo;
     states_ = states;
     initialState_ = initialState;
+    name_ = name;
     servo_->setAngle(states_[initialState_]);
 }
 
 Switch::Switch(std::shared_ptr<Servomotor> servo, SwitchConfig_t config):
-Switch(servo, *(config.states.get()), config.initial_state){}
+Switch(servo, *(config.states.get()), config.initial_state, config.switch_name){}
 
 void Switch::setState(string state){
     auto stateElement = states_.find(state);
@@ -28,6 +31,23 @@ void Switch::setState(string state){
     }
     servo_->setAngle(stateElement->second);
     currentState_ = state;
+}
+
+string Switch::getName(){
+    return name_;
+}
+
+string Switch::toString(){
+    ostringstream oss;
+    oss<<"switch_name: " <<name_<<"\n";
+    oss<<"initial_state: "<<initialState_;
+    oss<<"current_state: "<<currentState_;
+    oss<<"\r\tstates:\n";
+
+    for(auto state : states_){
+        oss<<"\r\t\t"<<state.first<<": "<<state.second<<"\n";
+    }
+    return oss.str();
 }
 
 void Switch::setAvailableStates(std::unordered_map<std::string,std::uint16_t> newStates){

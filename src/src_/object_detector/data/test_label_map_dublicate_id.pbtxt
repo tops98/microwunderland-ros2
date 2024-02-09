@@ -1,0 +1,19 @@
+item {
+    name: "Car"
+    id: 1
+    display_name: "Car"
+}
+item {
+    name: "Plane"
+    id: 3
+    display_name: "Plane"
+}
+item {
+    name: "Ship"
+    id: 3
+    display_name: "Ship"
+}
+item {
+    name: "Horse"
+    id: 4
+}

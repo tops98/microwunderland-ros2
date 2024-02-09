@@ -17,8 +17,8 @@ uint32_t frequnecy){
     servoPin_ = servoPin;
     pwmController_ = pwmController;
 
-    pwmController_->enablePwmPin(servoPin,true);
     pwmController_->setPwmFrequency(frequency_);
+    pwmController_->enablePwmPin(servoPin,true);
     recalculatePulseLengthPerDegreeConst();
 }
 

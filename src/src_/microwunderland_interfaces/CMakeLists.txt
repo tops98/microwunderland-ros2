@@ -14,9 +14,11 @@ set(msg_files
   "msg/StringUint16Pair.msg"
   "msg/ListNamed2DPositions.msg"
   "msg/Named2DPosition.msg"
-  "msg/BoundingBox.msg"
-  "msg/LabeledImage.msg"
   "msg/Vector2D.msg"
+  "msg/BoundingBox.msg"
+  "msg/BoundingBoxList.msg"
+  "msg/TrackedObject.msg"
+  "msg/TrackedObjects.msg"
 )
 
 set(srv_files

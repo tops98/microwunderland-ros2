@@ -1,4 +1,4 @@
-from microwunderland_interfaces.msg import ListNamed2DPositions
+from microwunderland_interfaces.msg import TrackedObjects
 import rclpy
 from rclpy.executors  import MultiThreadedExecutor
 from rclpy.node  import Node
@@ -67,9 +67,9 @@ class TrafficPlanner(Node):
             self._ros_node.set_engine_state(vehicle.name,enable)
     
 
-    def update_vehicle_positions(self, positions: ListNamed2DPositions) -> None:
-        for pos in positions:
-            self._tracked_vehicles[pos.name].position = [pos.x,pos.y]
+    def update_vehicle_positions(self, tracked_objects: TrackedObjects) -> None:
+        for obj in tracked_objects:
+            self._tracked_vehicles[obj.id].position = [obj.position.x, obj.position.y]
 
 
     def check_vehicle_positions(self, vehicle: TrackedObject) -> None:

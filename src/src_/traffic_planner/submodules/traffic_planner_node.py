@@ -1,4 +1,4 @@
-from microwunderland_interfaces.msg import ListNamed2DPositions
+from microwunderland_interfaces.msg import TrackedObjects
 from microwunderland_interfaces.srv import SetState
 from std_srvs.srv import SetBool
 import rclpy
@@ -14,7 +14,7 @@ from time import sleep
 class TrafficPlannerNode(Node):
 
     _buffer_cond: Condition
-    _positions_buffer: ListNamed2DPositions
+    _tracked_obj_buffer: TrackedObjects
     _switch_service: Client
     _vehicle_services: Dict[str,Client]
     _tracker_sub: Subscription
@@ -28,7 +28,7 @@ class TrafficPlannerNode(Node):
         self._vehicle_services = dict()
         self._switch_service = None
         self._tracker_sub = None
-        self._positions_buffer = None
+        self._tracked_obj_buffer = None
         self._buffer_cond = Condition()
 
         self._switch_cb_group = ReentrantCallbackGroup()
@@ -48,19 +48,19 @@ class TrafficPlannerNode(Node):
 
 
 
-    def add_positions_to_buffer(self, positions: ListNamed2DPositions) -> None:
+    def add_positions_to_buffer(self, positions: TrackedObjects) -> None:
         with self._buffer_cond:
-            self._positions_buffer = positions
+            self._tracked_obj_buffer = positions
             self._buffer_cond.notify()
 
 
-    def get_positions_from_buffer(self) -> ListNamed2DPositions:
+    def get_positions_from_buffer(self) -> TrackedObjects:
         with self._buffer_cond:
-            while self._positions_buffer == None:
+            while self._tracked_obj_buffer == None:
                 self._buffer_cond.wait()
 
-            pos = self._positions_buffer
-            self._positions_buffer = None
+            pos = self._tracked_obj_buffer
+            self._tracked_obj_buffer = None
         return pos
     
 
@@ -88,7 +88,7 @@ class TrafficPlannerNode(Node):
             self.destroy_subscription(self._tracker_sub)
         
         self._tracker_sub = self.create_subscription(
-            ListNamed2DPositions,
+            TrackedObjects,
             topic_name,
             self._tracker_listener_callback,
             10,

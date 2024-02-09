@@ -14,31 +14,30 @@ class BasePIi2cAdapter{
 DISABLE_WARNING_PUSH
 DISABLE_WARNING_UNREFERENCED_FORMAL_PARAMETER
 
-        virtual int setup(int deviceId) {
-            return 0;
+        virtual void setup(int deviceId) {
         };
-        virtual int write (int fd, int data){
+        virtual int write (int data){
 			return 0;
 		};
         virtual int read (int fd){
 			return 0;
 		};
-        virtual int writeReg8 (int fd, int reg, int data){
+        virtual int writeReg8 (int reg, int data){
 			return 0;
 		};
-        virtual int writeReg16 (int fd, int reg, int data){
+        virtual int writeReg16 (int reg, int data){
 			return 0;
 		};
-        virtual int readReg8 (int fd, int reg){
+        virtual int readReg8 (int reg){
 			return 0;
 		};
-        virtual int readReg16 (int fd, int reg){
+        virtual int readReg16 (int reg){
 			return 0;
 		};
 
 DISABLE_WARNING_POP
 
-    private:
+    protected:
         BasePIi2cAdapter(){};
 };
 #endif

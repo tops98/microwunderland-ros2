@@ -11,6 +11,8 @@
 #include <vector>
 #include <functional>
 #include <stdexcept>
+#include <sstream>
+#include <iostream>
 
 typedef servo_controller::msg::StringUint16Pair SwitchState;
 
@@ -36,13 +38,24 @@ Node("Switch_Service"){
         bind(&SwitchService::setStateCallback,
         this, placeholders::_1, placeholders::_2)
     );
+
+    RCLCPP_INFO(this->get_logger(), "SwitchService ready");
+}
+
+void SwitchService::printState(){
+    std::ostringstream oss;
+    oss<<"+++ Switch service configuration +++\n";
+    for( auto sw : switches_){
+        oss<<sw.second->toString()<<"\n";
+    }
+    RCLCPP_INFO(this->get_logger(), oss.str().c_str());
 }
 
 void SwitchService::getAvailableStatesCallback(const GetAvailableStatesService::Request::SharedPtr request,
  GetAvailableStatesService::Response::SharedPtr response){
     vector<SwitchState> states;
     string switchName = request->switch_name;
-    
+    RCLCPP_INFO_STREAM(this->get_logger(), "Getting available states for switch: " << switchName);
     if( switches_.find(switchName) == switches_.end()){
         response->states = states;
         response->status = 1;
@@ -63,7 +76,9 @@ void SwitchService::getAvailableStatesCallback(const GetAvailableStatesService::
 void SwitchService::getCurrentStateCallback(const GetCurrentStateService::Request::SharedPtr request,
  GetCurrentStateService::Response::SharedPtr response){
     
-    if( switches_.find(request->switch_name) == switches_.end()){
+    string switchName = request->switch_name;
+    RCLCPP_INFO_STREAM(this->get_logger(), "Getting current states for switch: " << switchName);
+    if( switches_.find(switchName) == switches_.end()){
         response->state_name = "";
         response->status = 1;
         return;
@@ -76,7 +91,10 @@ void SwitchService::getCurrentStateCallback(const GetCurrentStateService::Reques
 
 void SwitchService::setStateCallback(const SetStateService::Request::SharedPtr request,
  SetStateService::Response::SharedPtr response){
-    if( switches_.find(request->switch_name) == switches_.end()){
+
+    string switchName = request->switch_name;
+    RCLCPP_INFO_STREAM(this->get_logger(), "Setting state to "<<request->state_name<<" for switch: " << switchName);
+    if( switches_.find(switchName) == switches_.end()){
         response->status = 1;
         return;
     }
@@ -90,6 +108,7 @@ unordered_map<string,shared_ptr<Switch>> switchFactory(shared_ptr<AbstractPwmCon
     for( auto config : configs){
         auto servo = make_shared<Servomotor>(pwmController,config.servomotor);
         auto a = make_shared<Switch>(servo,config);
+        switchMap[a->getName()] = a;
     }
     return switchMap;
 }

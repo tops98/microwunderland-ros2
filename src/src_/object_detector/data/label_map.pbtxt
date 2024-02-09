@@ -1,5 +1,5 @@
 item {
-    name: "Car",
-    id: 1,
+    name: "Car"
+    id: 1
     display_name: "Car"
 }

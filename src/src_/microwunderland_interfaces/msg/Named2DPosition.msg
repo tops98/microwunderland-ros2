@@ -1,3 +1,2 @@
-float64 x
-float64 y
+Vector2D position
 string name

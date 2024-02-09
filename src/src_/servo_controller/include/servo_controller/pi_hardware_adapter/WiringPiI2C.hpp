@@ -1,5 +1,3 @@
-#ifdef WIRING_PI_ADAPTER
-
 #ifndef WIRINGPII2C_HPP
 #define WIRINGPII2C_HPP
 
@@ -8,15 +6,15 @@
 #include <servo_controller/pi_hardware_adapter/base_pi_i2c_adapter.hpp>
 
 
-class WiringPiI2CAdapter: BasePIi2cAdapter{
+class WiringPiI2CAdapter: public BasePIi2cAdapter{
     
     private:
-        int deviceFileHandle_ = 0;
-        static WiringPiI2CAdapter instance_ = nullptr;
+        int deviceFileHandle_ = -1;
+        static WiringPiI2CAdapter* instance_;
     
     // methods:
     public:
-        static WiringPiI2CAdapter getInstance();
+        static WiringPiI2CAdapter* getInstance();
 
         void setup(int deviceId) override{
             deviceFileHandle_ = wiringPiI2CSetup (deviceId);
@@ -52,12 +50,11 @@ class WiringPiI2CAdapter: BasePIi2cAdapter{
     private:
         WiringPiI2CAdapter(){};
         void checkForDevice(){
-            if(deviceFileHandle_ == nullptr){
-                throw "no device has been assigned;
-                please call setup(deviceId before using any other method
-                then getInstance)";
+            if(deviceFileHandle_ == -1){
+                throw "no device has been assigned;\
+                please call setup(deviceId before using any other method\
+                then getInstance)\n";
             }
         };
 };
-#endif
 #endif
