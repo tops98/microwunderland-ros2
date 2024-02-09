@@ -31,21 +31,30 @@ rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_t
 # include header files
 include_directories(include)
 
-# add src folder to label
-file(GLOB_RECURSE SOURCES "src/*.cpp")
+# add auxiliary src source files to label
+file(GLOB_RECURSE AUX_SOURCES "src/*.cpp")
+list(FILTER AUX_SOURCES EXCLUDE REGEX "src/ros_nodes/*")
 
 # add executeables
-add_executable(SwitchService ${SOURCES})
+add_executable(SwitchService "src/ros_nodes/SwitchService.cpp" ${AUX_SOURCES})
+add_executable(ServoTester "src/ros_nodes/ServoTester.cpp" ${AUX_SOURCES})
+
 ament_target_dependencies(SwitchService rclcpp yaml-cpp)
+ament_target_dependencies(ServoTester rclcpp yaml-cpp)
+
 if(use_wiring_pi)
   target_link_libraries(SwitchService ${wiringPi_LIB} yaml-cpp ${cpp_typesupport_target})
+  target_link_libraries(ServoTester ${wiringPi_LIB} yaml-cpp ${cpp_typesupport_target})
 else()
   target_link_libraries(SwitchService yaml-cpp ${cpp_typesupport_target})
+  target_link_libraries(ServoTester yaml-cpp ${cpp_typesupport_target})
+
 endif()
 
 #config ros2 cli tools
 install(TARGETS
   SwitchService
+  ServoTester
   DESTINATION lib/${PROJECT_NAME}
 )
 
