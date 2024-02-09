@@ -1,0 +1,4 @@
+# Service interface with a string parameter
+string value  # string param
+---
+uint8 status          # status code indicating the result of the service call

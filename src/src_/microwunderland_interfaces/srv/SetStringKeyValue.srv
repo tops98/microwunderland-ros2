@@ -1,0 +1,5 @@
+# set value of key to the desired value 
+string key  # key identifying the string 
+string value  # new value of the string
+---
+uint8 status       # status code; Equals zero if all went well one if key was not found

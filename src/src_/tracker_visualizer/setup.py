@@ -25,7 +25,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'tracker_visualizer = tracker_visualizer.ros_node:main'
+            'tracker_visualizer = tracker_visualizer.visualizer_node:main'
         ],
     },
 )

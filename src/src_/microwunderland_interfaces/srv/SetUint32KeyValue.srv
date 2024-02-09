@@ -1,0 +1,5 @@
+# sets a uint32
+string key   # key value 
+uint32 value # value to sets
+---
+uint8 status # status code

@@ -1,11 +1,11 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
-package_name = 'aruco_detector'
+package_name = 'tinycar_adapter'
 
 setup(
     name=package_name,
     version='0.0.0',
-    packages=[package_name],
+    packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -13,14 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='tobias',
-    maintainer_email='tobias.haugg@gmail.com',
+    maintainer='root',
+    maintainer_email='tobias.haugg@haw-hamburg.de',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'arucu_detector_node = aruco_detector.arucu_detector_node:main'
+            'tinycar_adapter = tinycar_adapter.ros_node:main',
         ],
     },
 )

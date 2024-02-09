@@ -10,7 +10,7 @@ from sensor_msgs.msg import CompressedImage
 from microwunderland_interfaces.msg import TrackedObjects, TrackedObject
 
 
-class TrackerNode(Node):
+class VisualizerNode(Node):
 
     def __init__(self):
         super().__init__('visualizer_node')
@@ -104,7 +104,7 @@ class TrackerNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     executor = MultiThreadedExecutor()
-    visualizer = TrackerNode()
+    visualizer = VisualizerNode()
     executor.add_node(visualizer)
 
     executor.spin()

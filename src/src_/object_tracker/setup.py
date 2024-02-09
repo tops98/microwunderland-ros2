@@ -21,7 +21,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'object_tracker = object_tracker.ros_node:main'
+            'object_tracker = object_tracker.tracker_node:main'
         ],
     },
 )

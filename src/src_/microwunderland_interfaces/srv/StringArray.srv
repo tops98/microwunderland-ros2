@@ -1,0 +1,5 @@
+# Service that accepts a list of string values and returns a status
+
+string[] strings  # list of strings
+---
+uint8 status    # status code

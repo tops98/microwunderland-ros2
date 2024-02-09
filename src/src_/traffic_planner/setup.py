@@ -1,5 +1,7 @@
 from setuptools import setup
 from setuptools import find_packages
+import os
+from glob import glob
 
 package_name = 'traffic_planner'
 
@@ -12,6 +14,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share',package_name,'traffic_planner_data/'),glob('traffic_planner_data/*')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -22,7 +25,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'planner = traffic_planner.traffic_planner:main',
+            'planner = traffic_planner.planner_node:main',
         ],
     },
 )

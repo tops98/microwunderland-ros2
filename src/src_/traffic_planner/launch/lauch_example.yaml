@@ -4,7 +4,7 @@ launch:
     exec: "planner"
     name: "example_traffice_planner"
     ros__parameters:
-      map_location: "./traffic_planer_data/map.yaml"
+      map_location: "./traffic_planer_data/switch_pixel_coords.yaml"
       travel_plan_location: "/traffic_planer_data/travel_plan.yaml"
       switch_service_name: "switch_controller"
       tracker_topic_name: "tracked_objects"

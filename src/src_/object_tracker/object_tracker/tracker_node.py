@@ -26,6 +26,7 @@ class TrackerNode(Node):
         num_axis = self.get_parameter('num_axis').get_parameter_value().integer_value
         # get params for tracker
         delta_max = self.get_parameter("delta_max").get_parameter_value()._double_value
+        num_probation_updates = self.get_parameter("num_probation_updates").get_parameter_value().integer_value
         max_update_pause_ms=self.get_parameter("max_update_pause").get_parameter_value()._double_value
         # get params for node
         detection_topic = self.get_parameter("detections_topic").get_parameter_value().string_value
@@ -36,13 +37,14 @@ class TrackerNode(Node):
             num_measurements= num_axis,
             initial_uncertenty= np.array(intial_uncertainty),
             measurment_uncertenty= np.array(measurment_uncertainty),
-            process_noise= np.array(processnoise),
+            process_noise= np.array(processnoise)
         )
 
         self._tracker = CentroidTracker(
             delta_max,
             max_update_pause_ms,
-            filter_config
+            filter_config,
+            num_probation_updates= num_probation_updates
         )
 
         self._publisher = self.create_publisher(
@@ -93,6 +95,7 @@ class TrackerNode(Node):
         self.declare_parameter("sample_rate",10.0)
         
         self.declare_parameter("delta_max", 30.0)
+        self.declare_parameter("num_probation_updates", 5)
         self.declare_parameter("max_update_pause", 6000.)
 
         self.declare_parameter("num_axis", 2)
@@ -108,6 +111,9 @@ class TrackerNode(Node):
     def create_message(self, centroids:List[Centroid]) -> TrackedObjects:
         tracked_objects = TrackedObjects()
         for centroid in centroids:
+            if centroid.number_of_updates < self._tracker._num_probation_updates:
+                continue
+            
             object = TrackedObject()
             position = Vector2D()
             velocity = Vector2D()
@@ -146,7 +152,6 @@ class TrackerNode(Node):
                 y1=bb.pos1.y,
                 y2=bb.pos2.y
             )
-        
         self._tracker.update(positions)
 
     def _get_center(self, x1:float, y1:float, x2:float, y2:float) -> Tuple[float,float]:

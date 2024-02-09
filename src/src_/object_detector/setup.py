@@ -24,7 +24,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'object_detector = object_detector.ros_node:main',
+            'object_detector = object_detector.detector_node:main',
         ],
     },
 )
